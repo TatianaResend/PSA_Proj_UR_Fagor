@@ -14,3 +14,5 @@ TIA Portal V16
 Visual Studio
 Pyton: 3.7.9
 PyCharm - OpenCV
+
+Olá
