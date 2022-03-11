@@ -15,4 +15,4 @@ Visual Studio
 Pyton: 3.7.9
 PyCharm - OpenCV
 
-
+Diagrama de Gantt 
