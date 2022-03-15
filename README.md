@@ -16,4 +16,4 @@ Pyton: 3.7.9
 PyCharm - OpenCV
 
 15 Março 2022
-Elaboração do planeamento e diagrama de Gantt
+Elaboração do planeamento e diagrama de Gantt e colocação na pasta GestaoPROJ
