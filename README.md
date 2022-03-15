@@ -1,7 +1,7 @@
 # PSA_Proj_UR
 
 11 Março 2022
--> Criação repositório (Tatiana)
+-> Criação repositório
 
 Carla marques, nº93043, carlamlmarques@ua.pt
 Guilherme sousa, nº92958, gui.sousa@ua.pt
@@ -15,4 +15,5 @@ Visual Studio
 Pyton: 3.7.9
 PyCharm - OpenCV
 
-Diagrama de Gantt 
+15 Março 2022
+Elaboração do planeamento e diagrama de Gantt
