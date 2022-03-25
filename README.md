@@ -18,3 +18,8 @@ PyCharm - OpenCV
 15 Março 2022
 Elaboração do planeamento e diagrama de Gantt (pasta GestaoPROJ)
 Esquema do Sistema com comunicações (pasta GestaoPROJ)
+
+
+25 Março 2022
+AXURE [MOCKUPS] 
+FIGMA
