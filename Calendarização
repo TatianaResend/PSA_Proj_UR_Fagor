@@ -1,1 +1,7 @@
 Semana 3
+Leitura dos códigos QR e DataMatrix
+Criação de um Data Block com  array com a informação do nº da peça, a data, a hora e o código.
+Guardar informação de 10 ultimas leituras
+
+Semana 4
+Programa com a simulação do robô
