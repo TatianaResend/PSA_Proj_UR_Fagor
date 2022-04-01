@@ -23,3 +23,13 @@ Esquema do Sistema com comunicações (pasta GestaoPROJ)
 25 Março 2022
 AXURE [MOCKUPS] 
 FIGMA
+
+29 Março 2022
+Configuração do DataLogic e programa no TIA PORTAL (todo o grupo)
+
+31 Março 2022
+Leitura e criação de novos códigos QR e DataMatrix (todo o grupo)
+
+01 Abril 2022
+Pequena apresentação da leitura dos códigos QR e DataMatrix (todo o grupo)
+Elaboração/Recalendarização dos objetivos semanais
