@@ -33,3 +33,6 @@ Leitura e criação de novos códigos QR e DataMatrix (todo o grupo)
 01 Abril 2022
 Pequena apresentação da leitura dos códigos QR e DataMatrix (todo o grupo)
 Elaboração/Recalendarização dos objetivos semanais
+
+08 Abril 2022
+Demonstração do programa elaborado do robô (simulação)
