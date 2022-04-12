@@ -36,3 +36,10 @@ Elaboração/Recalendarização dos objetivos semanais
 
 08 Abril 2022
 Demonstração do programa elaborado do robô (simulação)
+
+
+Endereços:
+PLC bancada 1: 192.168.114.12
+HMI bancada 1: 192.168.114.2
+PC da Carla:   192.168.114.100
+Datalogic:     192.168.114.99
