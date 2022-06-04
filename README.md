@@ -37,8 +37,13 @@ Elaboração/Recalendarização dos objetivos semanais
 08 Abril 2022
 Demonstração do programa elaborado do robô (simulação)
 
+03 Junho 2022
+Já se consegue com sucesso transportar a peça pelo tapete de forma a que inicialmente (quando não tem peça na posição OK) o tapete estar ligado.
+A deteção da posição OK é feita através de um sensor fotoelétrico que dá a informação de ter uma peça ao PLC e por sua vez manda o tapete para e o leitor da DataLogic ler o código QR ou DataMatrix
+
 Endereços:
 PLC bancada 1: 192.168.114.12
 HMI bancada 1: 192.168.114.2
 PC da Carla:   192.168.114.100
 Datalogic:     192.168.114.99
+Câmara:        192.168.0.10
