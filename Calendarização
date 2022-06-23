@@ -28,5 +28,17 @@ Elaboração/Recalendarização dos objetivos semanais
 Demonstração do programa elaborado do robô (simulação)
 
 03 Junho 2022
-Já se consegue com sucesso transportar a peça pelo tapete de forma a que inicialmente (quando não tem peça na posição OK) o tapete estar ligado.
-A deteção da posição OK é feita através de um sensor fotoelétrico que dá a informação de ter uma peça ao PLC e por sua vez manda o tapete para e o leitor da DataLogic ler o código QR ou DataMatrix
+Já se consegue com sucesso transportar a peça pelo tapete de forma a que inicialmente 
+(quando não tem peça na posição OK) o tapete estar ligado.
+A deteção da posição OK é feita através de um sensor fotoelétrico que dá a informação 
+de ter uma peça ao PLC e por sua vez manda o tapete para e o leitor da DataLogic ler o código QR ou DataMatrix
+
+10 Junho 2022
+Implementação de visão no projeto.
+
+22 Junho 
+Comunicação robô e camarâ - OK
+Comunicação robô e PLC - OK
+Programa simples de encontro do centroide e angulo para apanho da peça inicial - OK
+Defenição da comunicação entre PLC Siemens e PLC Fagor - OK
+
