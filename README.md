@@ -1,7 +1,6 @@
 # PSA_Proj_UR
 
-11 Março 2022
--> Criação repositório
+
 
 Carla marques, nº93043, carlamlmarques@ua.pt
 Guilherme sousa, nº92958, gui.sousa@ua.pt
