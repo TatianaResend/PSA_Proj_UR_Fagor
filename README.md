@@ -14,8 +14,8 @@ Versões de softwares a utilizar:
 * PyCharm - OpenCV
 
 Endereços IP:
-* PLC bancada 1: 192.168.114.12
-* HMI bancada 1: 192.168.114.2
+* PLC bancada : 192.168.114.16
+* HMI bancada : 192.168.114.6
 * PC da Carla:   192.168.114.100
 * Datalogic:     192.168.114.99
 * Câmara:        192.168.114.51
