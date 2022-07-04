@@ -22,7 +22,7 @@ Endereços IP:
 * Robô Ur10:     192.168.114.50
 
 # Objetivo do projeto
-...
+O presente relatório tem como objetivo a explicação do trabalho desenvolvido ao longo do semestre no âmbito da Unidade Curricular de Projecto em Sistemas de Automação. O projeto desenvolvido e explicado neste relatório nada mais é que uma célula robotizada para alimentação de um centro de maquinação FAGOR. Foram projetados e desenvolvidos todos os subsistemas desde o tapete rolante, passando pela aquisição de imagens por parte de um leitor de código de barras, o manuseamento da peça por parte de um robô, a maquinação da peça por parte do centro de maquinação e a rastrebeabilidade de todo o ciclo. Foi ainda desenvolvido um sistema de visão com o objetivo de localizar a peça no tapete e um sistema de atuação pneumática.
 
 # Demonstração
 ...
