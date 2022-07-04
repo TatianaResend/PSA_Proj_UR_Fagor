@@ -1,9 +1,5 @@
-Gestão de projeto
-->Cadernos de encargos
-->Diagrama de Gant
-
-Projeto elétrico (Carla + Ingrid)
-Programa PLC (Carla + Tatiana)
-Programa robô (       + Tatiana)
-PC - rastreabilidade (Ingrid + )
-Visão (Tatiana + )
+Decidiu-se dividir o trabalho em subsistemas pelos diversos elementos constituintes do grupos.
+Deste modo, a aquisição e leitura dos códigos QR foram da responsabilidade da Ingrid Lukoki; 
+O desenvolvimento da programação do PLC ficou a cargo da Carla Marques;
+A programação do robô UR10 foi da inteira responsabilidade da Tatiana Resende; 
+A programação da Fagor 8050 CNC ficou ao encargo do Guilherme Sousa.
