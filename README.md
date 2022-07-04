@@ -1,4 +1,4 @@
-# PSA_Proj_UR
+# PSA_Proj_UR10_Fagor
 
 Elementos:
 * Carla marques, nº93043, carlamlmarques@ua.pt
