@@ -16,7 +16,7 @@ Versões de softwares a utilizar:
 Endereços IP:
 * PLC bancada : 192.168.114.16
 * HMI bancada : 192.168.114.6
-* PC da Carla:   192.168.114.100
+* PC:   192.168.114.100
 * Datalogic:     192.168.114.99
 * Câmara:        192.168.114.51
 * Robô Ur10:     192.168.114.50
