@@ -1,0 +1,2505 @@
+<!-- Saved on Monday July 4 2022 22:21:55 -->
+<!-- Storage version 1 -->
+<storage
+	storage_format="1"
+	date="10:21 pm  -  Mon July 4 2022"
+	version="1.3.1.1322">
+<boa_info>
+<system>
+<hardware
+	wince_ram="total 190 MB, ramdisk 16 MB"
+	system_memory="total 190 MB, available 138 MB"
+	sensor_info="1600 x 1200, 8 bpp"
+	digital_io="1 inputs, 2 outputs"/>
+<software
+	fw="version 1.3.1.1322, Jun  2 2014 01:46:49"
+	os="version 6.0.0, 03/31/15  09:32p"
+	server="192.168.114.51:4500"/>
+</system>
+<program
+	image_size_uom="bytes"
+	total_image_count="5">
+<images
+	total_image_size="9060000"/>
+</program>
+</boa_info>
+<tolerances/>
+<system_mgr>
+<gui_update_effort
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="0"/>
+</gui_update_effort>
+<report_template
+	type="258"
+	flags="8392723">
+<value
+	type="7"
+	s="&lt;!-- BOA web report formating page.  --&gt;
+&lt;!-- Use it to design web report accessible on the device&apos;s web server --&gt;
+&lt;!-- Use &lt;sherlock acqA.image/&gt; to display sherlock&apos;s image --&gt;
+&lt;!-- Use &lt;sherlock &quot;property name&quot;/&gt; to display values --&gt;
+
+&lt;img src=&lt;sherlock acqA.image/&gt; width=160 height=120 /&gt;
+&lt;table&gt;
+ &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Name&lt;/th&gt; &lt;th&gt;Value&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt;
+  &lt;tbody&gt;
+   &lt;tr&gt;&lt;td&gt;Program running&lt;/td&gt;&lt;td&gt;&lt;sherlock System.running/&gt;&lt;/td&gt;&lt;/tr&gt;
+   &lt;tr&gt;&lt;td&gt;Run count&lt;/td&gt;&lt;td&gt;&lt;sherlock System.run_count/&gt;&lt;/td&gt;&lt;/tr&gt;
+   &lt;tr&gt;&lt;td&gt;Last run time&lt;/td&gt;&lt;td&gt;&lt;sherlock System.run_time/&gt;&lt;/td&gt;&lt;/tr&gt;
+   &lt;tr&gt;&lt;td&gt;Runs per seconds&lt;/td&gt;&lt;td&gt;&lt;sherlock System.runs_per_sec/&gt;&lt;/td&gt;&lt;/tr&gt;
+   &lt;tr&gt;&lt;td&gt;Program pass&lt;/td&gt;&lt;td&gt;&lt;sherlock System.pass/&gt;&lt;/td&gt;&lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+"/>
+</report_template>
+</system_mgr>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<variables>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="PLC_OrdemTrabalho"/>
+</name>
+<value
+	type="256"
+	flags="536873011">
+<value
+	type="1"
+	b="0"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="PLC_In"/>
+</name>
+<value
+	type="131585"
+	flags="536873011">
+<value
+	type="4"
+	size="0"
+	buf=""/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Feito_Anilhas"/>
+</name>
+<value
+	type="256"
+	flags="536873011">
+<value
+	type="1"
+	b="1"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Height"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="752"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Width"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="671"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Correcao_X"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="1310"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Correcao_Y"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="465"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="X_mm"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="0"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Y_mm"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="0"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="HeightGeral"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="433"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="WidthGeral"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="240"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="TCP_In"/>
+</name>
+<value
+	type="258"
+	flags="536873011">
+<value
+	type="7"
+	s=""/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="TCP_Out"/>
+</name>
+<value
+	type="258"
+	flags="536873011">
+<value
+	type="7"
+	s="[6,0,0,0,0,0]"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="TCP_out_esp"/>
+</name>
+<value
+	type="258"
+	flags="536873011">
+<value
+	type="7"
+	s="[6,1,25,-0.07499057992603353 , -5,0]"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="Manual"/>
+</name>
+<value
+	type="256"
+	flags="536873011">
+<value
+	type="1"
+	b="1"/>
+</value>
+</var>
+<var>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="BlobArea"/>
+</name>
+<value
+	type="257"
+	flags="536873011">
+<value
+	type="4"
+	d="333278"/>
+</value>
+</var>
+</variables>
+<timers/>
+<cameras>
+<camera>
+<partial_scan
+	type="257"
+	flags="142606483">
+<value
+	type="2"
+	i="0"/>
+</partial_scan>
+<rotate
+	type="257"
+	flags="142606483">
+<value
+	type="2"
+	i="0"/>
+</rotate>
+<trigger
+	type="257"
+	flags="142606483">
+<value
+	type="2"
+	i="2"/>
+</trigger>
+<trigger_freq
+	type="257"
+	flags="142606355">
+<value
+	type="4"
+	d="1"/>
+</trigger_freq>
+<trigger_delay
+	type="257"
+	flags="8388627">
+<value
+	type="4"
+	d="0"/>
+</trigger_delay>
+<buffer_count
+	type="257"
+	flags="142606355">
+<value
+	type="2"
+	i="5"/>
+</buffer_count>
+<trigger_debounce
+	type="257"
+	flags="142606355">
+<value
+	type="4"
+	d="200"/>
+</trigger_debounce>
+<trigger_polarity
+	type="257"
+	flags="142606483">
+<value
+	type="2"
+	i="1"/>
+</trigger_polarity>
+<exposure
+	type="257"
+	flags="8388627">
+<value
+	type="2"
+	i="50000"/>
+</exposure>
+<brightness
+	type="257"
+	flags="8388627">
+<value
+	type="4"
+	d="0"/>
+</brightness>
+<contrast
+	type="257"
+	flags="8388627">
+<value
+	type="4"
+	d="0"/>
+</contrast>
+<strobe_polarity
+	type="257"
+	flags="142606483">
+<value
+	type="2"
+	i="1"/>
+</strobe_polarity>
+<strobe_delay
+	type="257"
+	flags="8388627">
+<value
+	type="2"
+	i="0"/>
+</strobe_delay>
+<strobe_duration
+	type="257"
+	flags="8388627">
+<value
+	type="2"
+	i="10"/>
+</strobe_duration>
+<strobe_enable
+	type="256"
+	flags="8388627">
+<value
+	type="1"
+	b="0"/>
+</strobe_enable>
+<timeout
+	type="257"
+	flags="8388627">
+<value
+	type="4"
+	d="-1"/>
+</timeout>
+</camera>
+</cameras>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<calibrations>
+<calib
+	method="1">
+<calibData>
+<parent_sys_plugin
+	type="264"
+	flags="0">
+<value
+	type="6"
+	ui64="5221920"/>
+</parent_sys_plugin>
+<show_grid
+	type="256"
+	flags="8388627">
+<value
+	type="1"
+	b="0"/>
+</show_grid>
+<grid_size
+	type="257"
+	flags="8388627">
+<value
+	type="4"
+	d="50"/>
+</grid_size>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="calibration_manualA"/>
+</name>
+<method
+	type="258"
+	flags="2">
+<value
+	type="7"
+	s="manual"/>
+</method>
+<pluginViewId
+	type="258"
+	flags="0">
+<value
+	type="7"
+	s="calibration_manual"/>
+</pluginViewId>
+<image
+	type="263"
+	flags="8405031"
+	supplier="acqA.image">
+<value
+	type="6"
+	ui64="0"/>
+</image>
+<handle
+	type="273"
+	flags="2684373003">
+<value
+	type="6"
+	ui64="1332576"/>
+</handle>
+<helpId
+	type="2"
+	flags="0">
+<value
+	type="2"
+	i="400006"/>
+</helpId>
+<origin_x
+	type="257"
+	flags="8388659">
+<value
+	type="4"
+	d="800"/>
+</origin_x>
+<origin_y
+	type="257"
+	flags="8388659">
+<value
+	type="4"
+	d="600"/>
+</origin_y>
+<scale_x
+	type="257"
+	flags="8388659">
+<value
+	type="4"
+	d="1"/>
+</scale_x>
+<scale_y
+	type="257"
+	flags="8388659">
+<value
+	type="4"
+	d="1"/>
+</scale_y>
+<angle
+	type="257"
+	flags="8388659">
+<value
+	type="4"
+	d="0"/>
+</angle>
+</calibData>
+<calibImpl/>
+</calib>
+</calibrations>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<alignments/>
+<serialPorts>
+<port>
+<portData>
+<parent_sys_plugin
+	type="264"
+	flags="0">
+<value
+	type="6"
+	ui64="5232832"/>
+</parent_sys_plugin>
+<baud_rate
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="7"/>
+</baud_rate>
+<data_bits
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="3"/>
+</data_bits>
+<parity
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="0"/>
+</parity>
+<stop_bits
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="0"/>
+</stop_bits>
+<flow_control
+	type="257"
+	flags="8388755">
+<value
+	type="2"
+	i="0"/>
+</flow_control>
+<name
+	type="258"
+	flags="2">
+<value
+	type="7"
+	s="COM3"/>
+</name>
+<handle
+	type="277"
+	flags="2684373003">
+<value
+	type="6"
+	ui64="7758784"/>
+</handle>
+</portData>
+</port>
+</serialPorts>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<tcpConnections>
+<tcpServer>
+<connData>
+<parent_sys_plugin
+	type="264"
+	flags="0">
+<value
+	type="6"
+	ui64="5234784"/>
+</parent_sys_plugin>
+<isServer
+	type="256"
+	flags="2">
+<value
+	type="1"
+	b="1"/>
+</isServer>
+<ipv4_address
+	type="258"
+	flags="8388625">
+<value
+	type="7"
+	s="127.0.0.1"/>
+</ipv4_address>
+<port
+	type="257"
+	flags="8388627">
+<value
+	type="2"
+	i="5024"/>
+</port>
+<name
+	type="258"
+	flags="8388627">
+<value
+	type="7"
+	s="tcpip_serverA"/>
+</name>
+<handle
+	type="274"
+	flags="2684373003">
+<value
+	type="6"
+	ui64="1332928"/>
+</handle>
+</connData>
+</tcpServer>
+</tcpConnections>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<modbusConnections/>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<ftpConnections/>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<clConnections/>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<gefanucConnections/>
+<values_order
+	type="7"
+	size="16"
+	e0="PLC_OrdemTrabalho"
+	e1="PLC_In"
+	e2="Feito_Anilhas"
+	e3="Height"
+	e4="Width"
+	e5="Correcao_X"
+	e6="Correcao_Y"
+	e7="X_mm"
+	e8="Y_mm"
+	e9="HeightGeral"
+	e10="WidthGeral"
+	e11="TCP_In"
+	e12="TCP_Out"
+	e13="TCP_out_esp"
+	e14="Manual"
+	e15="varA"/>
+<netShares/>
+<program>
+<subroutine>
+<instructions>
+<instr
+	id="13032192"
+	pluginId="ipeSystemSub">
+<name
+	flags="8388626">
+<value
+	type="7"
+	s="main"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="6"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="5008.39"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+</instr>
+<instr
+	id="13096960"
+	pluginId="ipeAcqImgFlush">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="acq_flush_imagesA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0.0610352"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<cam
+	flags="142606391">
+<value
+	type="7"
+	s="cam0"/>
+</cam>
+</instr>
+<instr
+	id="13094656"
+	pluginId="ipeSystemScript">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="scriptB"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="2.13623"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<code
+	flags="8396839">
+<value
+	type="7"
+	s="VEngine.X_mm.value = 0;
+VEngine.Y_mm.value = 0;
+VEngine.TCP_In.value = &quot;&quot;;
+VEngine.TCP_Out.value = &quot;[6,0,0,0,0,0]&quot;;
+
+VEngine.tcpip_send_lineA.enabled = true;
+"/>
+</code>
+</instr>
+<instr
+	id="25264832"
+	pluginId="recvLineId">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="tcpip_recv_lineA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="65536"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="5004.85"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<connection
+	flags="16423"
+	supplier="tcpip_serverA.handle">
+<value
+	type="6"
+	ui64="0"/>
+</connection>
+<ascii_term_char
+	flags="8388663">
+<value
+	type="2"
+	i="64"/>
+</ascii_term_char>
+<timeout
+	flags="8388663">
+<value
+	type="2"
+	i="5000"/>
+</timeout>
+<max_chars_to_receive
+	flags="8388663">
+<value
+	type="2"
+	i="40"/>
+</max_chars_to_receive>
+<bytes_recv
+	flags="606076939">
+<value
+	type="3"
+	ui="0"/>
+</bytes_recv>
+<result
+	flags="606076939">
+<value
+	type="1"
+	b="0"/>
+</result>
+<incomplete
+	flags="606076939">
+<value
+	type="1"
+	b="1"/>
+</incomplete>
+<text
+	flags="606076939"
+	receiver="TCP_In.value">
+<value
+	type="7"
+	s=""/>
+</text>
+</instr>
+<instr
+	id="25267008"
+	pluginId="ipeSystemIf">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="ifA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="2"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0.915527"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<code
+	flags="8396839">
+<value
+	type="7"
+	s="VEngine.TCP_In.value == &quot;10@&quot; 
+//VEngine.Manual.value == true"/>
+</code>
+</instr>
+<instr
+	id="25269792"
+	pluginId="ipeAcqImgFlush">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="acq_flush_imagesB"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0.0610352"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<cam
+	flags="142606391">
+<value
+	type="7"
+	s="cam0"/>
+</cam>
+</instr>
+<instr
+	id="25271392"
+	pluginId="ipeAcqImgCam">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="acqA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="121.155"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<cam
+	flags="142606391">
+<value
+	type="7"
+	s="cam0"/>
+</cam>
+<image
+	flags="2684370955">
+<value
+	type="6"
+	ui64="25271968"/>
+</image>
+<arrival_time
+	flags="606076939">
+<value
+	type="4"
+	d="3.38145e+09"/>
+</arrival_time>
+<image_number
+	flags="606076939">
+<value
+	type="2"
+	i="628"/>
+</image_number>
+<status
+	flags="606076939">
+<value
+	type="1"
+	b="1"/>
+</status>
+</instr>
+<instr
+	id="25273312"
+	pluginId="ipeCloneImage">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="clone_Tratamento"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="10.6201"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<image
+	flags="2155888679"
+	supplier="acqA.image">
+<value
+	type="6"
+	ui64="0"/>
+</image>
+<image_copy
+	flags="2684370955">
+<value
+	type="6"
+	ui64="25273760"/>
+</image_copy>
+</instr>
+<instr
+	id="25276096"
+	pluginId="ipeSystemImgWnd">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="image_windowA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="6658"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="8.81958"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<image_update
+	flags="8388787">
+<value
+	type="2"
+	i="1"/>
+</image_update>
+<clear_when_not_updating
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</clear_when_not_updating>
+<show_overlay_graphics
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</show_overlay_graphics>
+<output_graphics
+	flags="41943091">
+<value
+	type="2"
+	i="15"/>
+</output_graphics>
+<suppress_graphics
+	flags="2147483648">
+<value
+	type="1"
+	b="0"/>
+</suppress_graphics>
+<image
+	flags="2156150823"
+	supplier="acqA.image">
+<value
+	type="6"
+	ui64="0"/>
+</image>
+<calibration
+	flags="35">
+<value
+	type="6"
+	ui64="0"/>
+</calibration>
+<overlay_data
+	flags="0">
+<value
+	type="17"
+	size="0"
+	buf=""/>
+</overlay_data>
+<window_position
+	flags="0">
+<value
+	type="17"
+	size="95"
+	buf="AAAAAgAAAC4B2dDLAAEAAAAAAAAAAAAAAAAEBAAAAnUAAAAAAAAAAAAABAQAAAJ1AAAAAAAAv/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAAAAnU="/>
+</window_position>
+<color_show_mono_rois
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</color_show_mono_rois>
+</instr>
+<instr
+	id="25277440"
+	pluginId="ipeSystemImgWnd">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="img_Tratada"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="6658"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="73.9746"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<image_update
+	flags="8388787">
+<value
+	type="2"
+	i="1"/>
+</image_update>
+<clear_when_not_updating
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</clear_when_not_updating>
+<show_overlay_graphics
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</show_overlay_graphics>
+<output_graphics
+	flags="41943091">
+<value
+	type="2"
+	i="15"/>
+</output_graphics>
+<suppress_graphics
+	flags="2147483648">
+<value
+	type="1"
+	b="0"/>
+</suppress_graphics>
+<image
+	flags="2156150823"
+	supplier="acqA.image">
+<value
+	type="6"
+	ui64="0"/>
+</image>
+<calibration
+	flags="35">
+<value
+	type="6"
+	ui64="0"/>
+</calibration>
+<overlay_data
+	flags="0">
+<value
+	type="17"
+	size="160"
+	buf="AAAAAAAAAAIAAAD/AAAADUCGoAAAAAAAQHTAAAAAAABAlQQAAAAAAEB0wAAAAAAAAAAADUCVBAAAAAAAQHTAAAAAAABAlQQAAAAAAECQfAAAAAAAAAAADUCVBAAAAAAAQJB8AAAAAABAhqAAAAAAAECQfAAAAAAAAAAADUCGoAAAAAAAQJB8AAAAAABAhqAAAAAAAEB0wAAAAAAAAAAAAQ=="/>
+</overlay_data>
+<window_position
+	flags="0">
+<value
+	type="17"
+	size="95"
+	buf="AAAAAgAAAC4B2dDLAAEAAAAAAAAAAAAAAAAEBAAAAnUAAAAAAAAAAP////7////+AAAAAAIAv/AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAAAAnU="/>
+</window_position>
+<color_show_mono_rois
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</color_show_mono_rois>
+</instr>
+<instr
+	id="25279616"
+	pluginId="ipeRectRoi">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="ROI"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="5296"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="35.8582"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<show
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</show>
+<lock_position
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</lock_position>
+<top_left_x
+	flags="8388659">
+<value
+	type="2"
+	i="250"/>
+</top_left_x>
+<top_left_y
+	flags="8388659">
+<value
+	type="2"
+	i="0"/>
+</top_left_y>
+<width
+	flags="8388659">
+<value
+	type="2"
+	i="1150"/>
+</width>
+<height
+	flags="8388659">
+<value
+	type="2"
+	i="1200"/>
+</height>
+<angle
+	flags="12582963">
+<value
+	type="4"
+	d="0"/>
+</angle>
+<align_home
+	flags="0">
+<value
+	type="10"
+	mapSize="0"/>
+</align_home>
+<interpolate
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</interpolate>
+<modify_image
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</modify_image>
+<alignment
+	flags="8405031">
+<value
+	type="6"
+	ui64="0"/>
+</alignment>
+<enable_pass_fail
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</enable_pass_fail>
+<code
+	flags="8192">
+<value
+	type="7"
+	s="true"/>
+</code>
+<image
+	flags="2684370955">
+<value
+	type="6"
+	ui64="25281888"/>
+</image>
+<pass
+	flags="606076937">
+<value
+	type="1"
+	b="1"/>
+</pass>
+</instr>
+<instr
+	id="25282208"
+	pluginId="ipeThresholdMono">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="thresholdA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="272"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="10.1013"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<threshold
+	flags="8388663">
+<value
+	type="4"
+	d="20"/>
+</threshold>
+</instr>
+<instr
+	id="25288672"
+	pluginId="ipeBlobMono">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="blobA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="272"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="11.1694"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<image_type
+	flags="8388787">
+<value
+	type="2"
+	i="0"/>
+</image_type>
+<connectivity
+	flags="8388787">
+<value
+	type="2"
+	i="0"/>
+</connectivity>
+<blob_color
+	flags="8388787">
+<value
+	type="2"
+	i="1"/>
+</blob_color>
+<features
+	flags="41943091">
+<value
+	type="3"
+	ui="3"/>
+</features>
+<feret_angles
+	flags="8388659">
+<value
+	type="2"
+	i="7"/>
+</feret_angles>
+<min_area
+	flags="8388659">
+<value
+	type="2"
+	i="50"/>
+</min_area>
+<max_area
+	flags="8388659">
+<value
+	type="2"
+	i="4999990"/>
+</max_area>
+<min_width
+	flags="8388659">
+<value
+	type="2"
+	i="1"/>
+</min_width>
+<max_width
+	flags="8388659">
+<value
+	type="2"
+	i="10000"/>
+</max_width>
+<min_height
+	flags="8388659">
+<value
+	type="2"
+	i="2"/>
+</min_height>
+<max_height
+	flags="8388659">
+<value
+	type="2"
+	i="10000"/>
+</max_height>
+<max_blobs
+	flags="8388659">
+<value
+	type="2"
+	i="1"/>
+</max_blobs>
+<sorting_direction
+	flags="8388787">
+<value
+	type="2"
+	i="1"/>
+</sorting_direction>
+<sorting_feature
+	flags="8388787">
+<value
+	type="2"
+	i="0"/>
+</sorting_feature>
+<remove_border_blobs
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</remove_border_blobs>
+<draw_bounding_box
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</draw_bounding_box>
+<threshold_type
+	flags="8388787">
+<value
+	type="2"
+	i="1"/>
+</threshold_type>
+<adaptive_threshold_locality
+	flags="8388787">
+<value
+	type="2"
+	i="0"/>
+</adaptive_threshold_locality>
+<local_threshold_patch_width
+	flags="8388659">
+<value
+	type="2"
+	i="20"/>
+</local_threshold_patch_width>
+<local_threshold_patch_height
+	flags="8388659">
+<value
+	type="2"
+	i="20"/>
+</local_threshold_patch_height>
+<adaptive_threshold_method
+	flags="8388787">
+<value
+	type="2"
+	i="4"/>
+</adaptive_threshold_method>
+<adaptive_threshold_base
+	flags="8388659">
+<value
+	type="4"
+	d="0"/>
+</adaptive_threshold_base>
+<adaptive_threshold_low
+	flags="8388659">
+<value
+	type="4"
+	d="0"/>
+</adaptive_threshold_low>
+<adaptive_threshold_high
+	flags="8388659">
+<value
+	type="4"
+	d="0"/>
+</adaptive_threshold_high>
+<fixed_threshold_level
+	flags="8388659">
+<value
+	type="4"
+	d="128"/>
+</fixed_threshold_level>
+<update_image
+	flags="8388659">
+<value
+	type="1"
+	b="0"/>
+</update_image>
+<blobs
+	flags="606076939">
+<value
+	type="2"
+	i="1"/>
+</blobs>
+<centroid_blob0
+	flags="606076939">
+<value
+	type="12"
+	x="1030.95"
+	y="689.153"/>
+</centroid_blob0>
+<area
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAAROEkE="/>
+</area>
+<bbox_area
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAFxnG0E="/>
+</bbox_area>
+<bbox_ratio
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAgPhf5T8="/>
+</bbox_ratio>
+<elongation
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAQJJ3W0A="/>
+</elongation>
+<fiber_length
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAwDZstkA="/>
+</fiber_length>
+<fiber_width
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAQIcfSkA="/>
+</fiber_width>
+<form_factor
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAC7BnD8="/>
+</form_factor>
+<width
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAABog0A="/>
+</width>
+<height
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAACYhkA="/>
+</height>
+<label
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAADgb0A="/>
+</label>
+<holes
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAAB0mUA="/>
+</holes>
+<perimeter_points
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAAAAd2UA="/>
+</perimeter_points>
+<perimeter_length
+	flags="606076939">
+<value
+	type="4"
+	size="1"
+	buf="AAAAwHWgxkA="/>
+</perimeter_length>
+<first_point
+	flags="538968139">
+<value
+	type="12"
+	size="1"
+	buf="AAAAAAAIjEAAAAAAAHiQQA=="/>
+</first_point>
+<centroid
+	flags="538968075">
+<value
+	type="12"
+	size="1"
+	buf="AAAAENAbkEAAAAAAOYmFQA=="/>
+</centroid>
+<bbox_tl
+	flags="538968075">
+<value
+	type="12"
+	size="1"
+	buf="AAAAAACghkAAAAAAAMB0QA=="/>
+</bbox_tl>
+<bbox_br
+	flags="538968075">
+<value
+	type="12"
+	size="1"
+	buf="AAAAAAAAlUAAAAAAAHiQQA=="/>
+</bbox_br>
+<ellipse_major
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAQC5rhkA="/>
+</ellipse_major>
+<ellipse_minor
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAYLkWgUA="/>
+</ellipse_minor>
+<ellipse_angle
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="/FCUW8e09L8="/>
+</ellipse_angle>
+<ellipse_axis_ratio
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAgGZk6D8="/>
+</ellipse_axis_ratio>
+<ellipse_roundness
+	flags="606077003">
+<value
+	type="4"
+	size="1"
+	buf="AAAAoAu+5z8="/>
+</ellipse_roundness>
+<thresholded_image
+	flags="2684371019">
+<value
+	type="6"
+	ui64="0"/>
+</thresholded_image>
+<grayscale_centroid
+	flags="538968139">
+<value
+	type="12"
+	size="0"
+	buf=""/>
+</grayscale_centroid>
+<grayscale_centroid_min
+	flags="606077003">
+<value
+	type="4"
+	size="0"
+	buf=""/>
+</grayscale_centroid_min>
+<grayscale_centroid_max
+	flags="606077003">
+<value
+	type="4"
+	size="0"
+	buf=""/>
+</grayscale_centroid_max>
+<grayscale_centroid_mean
+	flags="606077003">
+<value
+	type="4"
+	size="0"
+	buf=""/>
+</grayscale_centroid_mean>
+<grayscale_centroid_stddev
+	flags="606077003">
+<value
+	type="4"
+	size="0"
+	buf=""/>
+</grayscale_centroid_stddev>
+</instr>
+<instr
+	id="25289984"
+	pluginId="ipeSystemScript">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="scriptA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="6.89697"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<code
+	flags="8396839">
+<value
+	type="7"
+	s="if (VEngine.blobA.blobs==1){
+VEngine.tcpip_send_lineA.enabled = true;
+}else{
+VEngine.tcpip_send_lineA.enabled = false;
+}
+
+//Área do Blob
+//VEngine.BlobArea.value = VEngine.blobA.area[0];
+
+//Extrair valor &quot;Height&quot; e &quot;Width&quot; do Blob
+//VEngine.Height.value = VEngine.blobA.height[0];
+//VEngine.Width.value = VEngine.blobA.width[0];
+
+VEngine.Correcao_X.value = 1310;
+VEngine.Correcao_Y.value = 465;
+
+var x = VEngine.blobA.centroid[0].x - VEngine.Correcao_X.value;
+var y = VEngine.blobA.centroid[0].y - VEngine.Correcao_Y.value;
+
+//Valor X e Y em mm
+VEngine.X_mm.value = x * (10/72); //1/77 relação pixels-mm
+VEngine.Y_mm.value = y *(10/72); //1/77 relação pixels-mm
+
+//Constrói Msg TCP
+
+Angle = 1.57 - VEngine.blobA.ellipse_angle[0];
+if (Angle &gt; 1.57){
+Angle = Angle - 3.14;
+}
+
+L = VEngine.Correcao_Y.value * (10/72);
+NewY = L - L*Math.cos(Angle);
+NewX = L*Math.sin(Angle);
+
+VEngine.TCP_Out.value = &quot;[6,&quot; + Math.round(VEngine.X_mm.value) + &quot;,&quot; + Math.round(VEngine.Y_mm.value) + &quot;,&quot; + Angle + &quot; , &quot; + Math.round(NewX)+ &quot;,&quot; + Math.round(NewY) + &quot;]&quot;;
+
+VEngine.TCP_out_esp.value = VEngine.TCP_Out.value;"/>
+</code>
+</instr>
+<instr
+	id="25252544"
+	pluginId="sendLineId">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="tcpip_send_lineA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="65536"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="0"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="3.93677"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<connection
+	flags="16423"
+	supplier="tcpip_serverA.handle">
+<value
+	type="6"
+	ui64="0"/>
+</connection>
+<text
+	flags="8388663"
+	supplier="TCP_Out.value">
+<value
+	type="7"
+	s=""/>
+</text>
+<timeout
+	flags="8388663">
+<value
+	type="2"
+	i="5000"/>
+</timeout>
+<bytes_sent
+	flags="606076939">
+<value
+	type="3"
+	ui="36"/>
+</bytes_sent>
+<result
+	flags="606076939">
+<value
+	type="1"
+	b="1"/>
+</result>
+</instr>
+<instr
+	id="25290112"
+	pluginId="sleepId">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="sleepB"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="0"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="5.67627"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<duration
+	flags="8388663">
+<value
+	type="2"
+	i="3"/>
+</duration>
+</instr>
+</instructions>
+<structure
+	root="13032192">
+<branch
+	parent="13032192"
+	child0="13096960"
+	child1="13094656"
+	child2="25264832"
+	child3="25267008"/>
+<branch
+	parent="25267008"
+	child0="25269792"
+	child1="25271392"
+	child2="25273312"
+	child3="25276096"
+	child4="25277440"/>
+<branch
+	parent="25277440"
+	child0="25279616"
+	child1="25289984"
+	child2="25252544"
+	child3="25290112"/>
+<branch
+	parent="25279616"
+	child0="25282208"
+	child1="25288672"/>
+</structure>
+</subroutine>
+<subroutine>
+<instructions>
+<instr
+	id="16978144"
+	pluginId="ipeSystemSub">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="onPass"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="8194"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0.152588"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<event_name
+	type="258"
+	flags="0">
+<value
+	type="7"
+	s="pass"/>
+</event_name>
+</instr>
+</instructions>
+<structure
+	root="16978144"/>
+</subroutine>
+<subroutine>
+<instructions>
+<instr
+	id="15583392"
+	pluginId="ipeSystemSub">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="onFail"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="8194"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<event_name
+	type="258"
+	flags="0">
+<value
+	type="7"
+	s="fail"/>
+</event_name>
+</instr>
+</instructions>
+<structure
+	root="15583392"/>
+</subroutine>
+<subroutine>
+<instructions>
+<instr
+	id="16986144"
+	pluginId="ipeSystemSub">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="Analise_Anilhas"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="2"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+</instr>
+</instructions>
+<structure
+	root="16986144"/>
+</subroutine>
+<subroutine>
+<instructions>
+<instr
+	id="19328320"
+	pluginId="ipeSystemSub">
+<name
+	flags="8388627">
+<value
+	type="7"
+	s="onEvent_timerA"/>
+</name>
+<enabled
+	flags="8388659">
+<value
+	type="1"
+	b="1"/>
+</enabled>
+<flags
+	flags="0">
+<value
+	type="3"
+	ui="8194"/>
+</flags>
+<expanded
+	flags="0">
+<value
+	type="1"
+	b="1"/>
+</expanded>
+<time
+	flags="3">
+<value
+	type="4"
+	d="0"/>
+</time>
+<comment
+	flags="19">
+<value
+	type="7"
+	s=""/>
+</comment>
+<event_name
+	type="258"
+	flags="0">
+<value
+	type="7"
+	s="timer"/>
+</event_name>
+<timer_name
+	type="258"
+	flags="606076939">
+<value
+	type="7"
+	s=""/>
+</timer_name>
+</instr>
+</instructions>
+<structure
+	root="19328320"/>
+</subroutine>
+</program>
+<extra_program_data
+	vm="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"/>
+</storage>
