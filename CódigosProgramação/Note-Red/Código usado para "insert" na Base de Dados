@@ -6,7 +6,7 @@ d=msg.payload.posição1; // estado ou posição
 // Saída do Tapete
 
 
-if (b!=='00:00:00' || d!==""){   //se o tempo não for 00:00:00 ou se a posição for nula não escrever
+if (b!=='00:00:00' || d!==""){   //se o tempo for 00:00:00 ou se a posição for nula não escrever
 
 msg.topic="INSERT IGNORE INTO `rastreabilidade2`(`Data`,`Referência`, `Estado`, `Hora`)  VALUES ('" +a+ "', '" +c+ "','"+d+"', '" +b+ "');"
 
