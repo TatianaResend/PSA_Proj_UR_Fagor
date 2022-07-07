@@ -1,7 +1,0 @@
->> output=msg.payload.split(" "); //separar a message payload
->> var data = output [0] // get data
->> var hora = output [1] // get time
->> var msg1 ={ payload: data}; // guardar a string no msg1
->> var msg2 ={ payload: hora}; // guardar a string no msg2
->> return [msg1,msg2]
- 
