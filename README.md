@@ -27,4 +27,6 @@ Endereços IP:
 O objetivo do projeo é uma célula robotizada para alimentação de um centro de maquinação FAGOR. Foram projetados e desenvolvidos todos os subsistemas desde o tapete rolante, passando pela aquisição de imagens por parte de um leitor de código de barras, o manuseamento da peça por parte de um robô, a maquinação da peça por parte do centro de maquinação e a rastrebeabilidade de todo o ciclo. Foi ainda desenvolvido um sistema de visão com o objetivo de localizar a peça no tapete e um sistema de atuação pneumática.
 
 # Demonstração
-...
+
+https://youtu.be/0Op7plrYh5E
+
