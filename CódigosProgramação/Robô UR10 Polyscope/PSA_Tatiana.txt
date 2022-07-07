@@ -1,0 +1,147 @@
+ Program
+   BeforeStart
+     Set RoboOperacional=Off
+     RecolherPeca≔ False 
+     Set PecaRecolhida=Off
+     RetirarPeca≔ False 
+     open≔socket_open("192.168.114.51",5024)
+     Loop open≟ False 
+       open≔socket_open("192.168.114.51",5024)
+     targetPos≔p[0,0,0,0,0,0]
+     '# Configuracao variaveis'
+     var_from≔p[0,0,0.05,0,0,0]
+     var_from≔p[0,0,-0.05,0,0,0]
+     var_from≔p[0.1,0,0,0,0,0]
+     var_from≔p[-0.1,0,0,0,0,0]
+     P_dep_des≔p[0,0,150/1000,0,0,0]
+     P_dep_sub≔p[0,0,-150/1000,0,0,0]
+   Robot Program
+     '# Ligar Camara'
+     Loop open≟ False 
+       open≔socket_open("192.168.114.51",5024)
+     Set RoboOperacional=On
+     MoveJ
+       P_init
+       Loop RecolherPeca≟ False 
+         RecolherPeca≔read_input_boolean_register(0)
+       P_poscap
+     receiveFromServ≔[0,0,0,0,0,0,0]
+     'Wait: 2.0'
+     receiveFromServ≔socket_read_ascii_float(6)
+     Loop receiveFromServ[0]≠6
+       Wait: 2.0
+       sendToServer≔"10@"
+       socket_send_string(sendToServer)
+       receiveFromServ≔socket_read_ascii_float(6)
+     GetCameraData Folder
+       '# Here we should read the data from the camera'
+       Ry≔receiveFromServ[4]
+       x_cam≔receiveFromServ[2]
+       y_cam≔receiveFromServ[3]
+       NewX≔receiveFromServ[5]
+       NewY≔receiveFromServ[6]
+     Calculate Folder
+       '# Convert mm to m and deg to rad'
+       'Script: PSA_Tati_Pos.script'
+       target1≔p[x_cam/1000,y_cam/1000,0,0,0,0]
+       target2≔p[0,0,0,0,0,Ry]
+       target3≔p[NewX/1000,NewY/1000,0,0,0,0]
+       target4≔p[0,0,285/1000,0,0,0]
+     MoveToCamPose
+       MoveL
+         target1
+         Wait: 0.5
+         target2
+         Wait: 0.5
+         target3
+         Wait: 0.5
+         target4
+         Set Ar=On
+         Wait: 2.0
+         P_poscap
+     'Registo para PLC'
+     Set PecaRecolhida=On
+     RecolherPeca≔ False 
+     Wait: 0.1
+     Set PecaRecolhida=Off
+     'Movimentos para Fagor'
+     MoveJ
+       'P_init'
+       P_aproxFagor
+     MoveL
+       P_Fagor1
+       P_Fagor2
+       P_Fagor3
+       P_Fagor4
+       Set Ar=Off
+       P_Fagor5
+       P_Fagor6
+     'Registo para PLC'
+     Set PecaColocada=On
+     Wait: 0.1
+     Set PecaColocada=Off
+     'Esperar Maquinacao'
+     MoveJ
+       Waypoint_9
+     Loop RetirarPeca≟ False 
+       RetirarPeca≔read_input_boolean_register(2)
+     'Wait: 5.0'
+     MoveJ
+       'P_init'
+       P_aproxFagor
+     MoveL
+       P_Fagor1_1
+       P_Fagor2_1
+       P_Fagor3_1
+       P_Fagor4_2
+       Set Ar=On
+       Wait: 2.0
+       P_Fagor5_1
+       P_Fagor6_1
+     'Registo para PLC'
+     Set PecaRetirada=On
+     RetirarPeca≔ False 
+     Wait: 0.1
+     Set PecaRetirada=Off
+     MoveJ
+       P_Dep
+     Set Count_Deposito=Count_Deposito+1
+     If Count_Deposito≟1
+       MoveJ
+         P_Dep_aprox1_1
+     ElseIf Count_Deposito≟2
+       MoveJ
+         P_Dep_aprox2
+     ElseIf Count_Deposito≟3
+       MoveJ
+         P_Dep_aprox3
+     ElseIf Count_Deposito≟4
+       MoveJ
+         P_Dep_apox4
+     ElseIf Count_Deposito≟5
+       MoveJ
+         P_Dep_aprox5
+     ElseIf Count_Deposito≟6
+       MoveJ
+         P_Dep_aprox6
+     ElseIf Count_Deposito≟7
+       MoveJ
+         P_Dep_aprox7
+     ElseIf Count_Deposito≟8
+       MoveJ
+         P_Dep_aprox8
+     ElseIf Count_Deposito≟9
+       MoveJ
+         P_Dep_aprox9
+       Count_Deposito≔0
+     MoveL
+       'P_Dep1'
+       P_dep_des
+       Set Ar=Off
+       Wait: 1.0
+       P_dep_sub
+     Set PecaDepositada=On
+     Wait: 0.1
+     Set PecaDepositada=Off
+     MoveJ
+       P_init

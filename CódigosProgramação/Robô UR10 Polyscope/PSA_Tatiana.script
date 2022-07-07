@@ -1,0 +1,1028 @@
+def PSA_Tatiana():
+  modbus_add_signal("192.168.114.51", 255, 100, 2, "Estado", False)
+  modbus_set_signal_update_frequency("Estado", 10)
+  modbus_add_signal("192.168.114.51", 255, 200, 2, "CotaX", False)
+  modbus_set_signal_update_frequency("CotaX", 10)
+  modbus_add_signal("192.168.114.51", 255, 300, 2, "CotaY", False)
+  modbus_set_signal_update_frequency("CotaY", 10)
+  modbus_add_signal("192.168.114.51", 255, 400, 2, "MODBUS_2", False)
+  modbus_set_signal_update_frequency("MODBUS_2", 10)
+  modbus_add_signal("192.168.114.51", 255, 500, 2, "MODBUS_3", False)
+  modbus_set_signal_update_frequency("MODBUS_3", 10)
+  modbus_add_signal("192.168.114.51", 255, 1000, 2, "MODBUS_4", False)
+  modbus_set_signal_update_frequency("MODBUS_4", 10)
+  modbus_add_signal("192.168.114.51", 255, 2000, 2, "MODBUS_5", False)
+  modbus_set_signal_update_frequency("MODBUS_5", 10)
+  set_safety_mode_transition_hardness(0)
+  set_gravity([0.0, 0.0, 9.82])
+  set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+  set_payload(0.1, [-0.1, -0.075, 0.0])
+  set_tool_voltage(0)
+  step_count_cadc3c82_4cc2_4021_93eb_6ee7457c12f7 = 0.0
+  thread Step_Counter_Thread_c87d2e5c_d3ff_4f55_80ab_8665e719ab18():
+    while (True):
+      step_count_cadc3c82_4cc2_4021_93eb_6ee7457c12f7 = step_count_cadc3c82_4cc2_4021_93eb_6ee7457c12f7 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_c87d2e5c_d3ff_4f55_80ab_8665e719ab18()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  global xpt_p1=p[0.1, 0, 0, 0, 0, 0]
+  global Count_Deposito=0
+  global i_var_1=p[0, 0, 0.01, 0, 0, 0]
+  global cam_part=p[0, 0, 0.02, 0, 0, 0]
+  global xpt_p3=p[0.089, 0.075, 0, 0, 0, 0]
+  global xpt_p2=p[0, 0.1, 0, 0, 0, 0]
+  global pxxxxxx=p[1, 1, 1, 1, 1, 1]
+  global Base=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  # begin: URCap Installation Node
+  #   Source: Datalogic Impact Robot Guidance, 1.0.5, Datalogic S.r.l.
+  #   Type: Datalogic Impact
+  # end: URCap Installation Node
+  # begin: URCap Installation Node
+  #   Source: Gocator, 6.1.29.3, LMI Technologies
+  #   Type: Gocator
+  gocatorDaemon = rpc_factory("xmlrpc", "http://127.0.0.1:40564/RPC2")
+  M_PI = 3.141592653589793
+  def choose_ref_pose(pStart, pEnd):
+    return p[(pStart[0] + pEnd[0])/2,(pStart[1] + pEnd[1])/2,(pStart[2] + pEnd[2])/2,pStart[3], pStart[4], pStart[5]]
+  end
+  def gocator_scan_g2fm():
+  gocatorDaemon.StartSensor()
+  gocatorDaemon.WaitForData() # make sure surface was generated before stopping
+  gocatorDaemon.StopSensor()  # Stopping to make sure the laser line does not stay on
+  end
+  def gocator_scan(tcpPose, distance=0.15, armSpeed=0.1, armAcc=1.0, conveyorDirPose=p[0,0,0,0,0,0]):
+  if (gocatorDaemon.IsSnapshotSensor()):
+    popup("Scan node is to be used with Laser Profiler sensors only", error=True, blocking=True)
+    halt
+  end
+  tcpPoseStart = pose_trans(tcpPose, p[0,0,0,0,0,0])
+  if (not conveyorDirPose == p[0,0,0,0,0,0]):
+    tcpPoseEnd = tcpPoseStart
+    tcpPoseEnd[3] = conveyorDirPose[3]
+    tcpPoseEnd[4] = conveyorDirPose[4]
+    tcpPoseEnd[5] = conveyorDirPose[5]
+    tcpPoseEnd = pose_trans(tcpPoseEnd, p[0,distance,0,0,0,0])
+    tcpPoseEnd[3] = tcpPoseStart[3]
+    tcpPoseEnd[4] = tcpPoseStart[4]
+    tcpPoseEnd[5] = tcpPoseStart[5]
+  else:
+    tcpPoseEnd = pose_trans(tcpPose, p[0,distance,0,0,0,0])
+  end
+  if (not is_within_safety_limits(tcpPoseStart) or not is_within_safety_limits(tcpPoseEnd)):
+    popup("Unable to perform movement. Try a different starting position, or a shorter surface length.", error=True, blocking=True)
+    halt
+  end
+  movej(tcpPoseStart)
+  gocatorDaemon.SetSurfaceLength(distance)
+  gocatorDaemon.SetTravelSpeed(armSpeed)
+  gocatorDaemon.StartSensor() # Starting here avoids latency on daemon.Trigger() function
+  sleep(0.2)
+  flangePoseStart = get_actual_tool_flange_pose()
+  gocatorDaemon.Trigger(False)
+  movel(tcpPoseEnd, a=armAcc, v=armSpeed)
+  sleep(0.2)
+  gocatorDaemon.WaitForData() # make sure surface was generated before stopping
+  gocatorDaemon.StopSensor()  # Stopping to make sure the laser line does not stay on
+  flangePoseEnd = get_actual_tool_flange_pose()
+  flange_pose = choose_ref_pose(flangePoseStart, flangePoseEnd)
+  flangePose_list = [ flange_pose[0],  flange_pose[1], flange_pose[2], flange_pose[3], flange_pose[4], flange_pose[5] ]
+  gocatorDaemon.KeepRobotPose(flangePose_list)
+  return flange_pose
+  end
+  def gocator_trigger(tcpPose, wait=True):
+  movej(tcpPose)
+  sleep(0.2)
+  gocatorDaemon.Trigger(wait)
+  flange_pose = get_actual_tool_flange_pose()
+  flangePose_list = [ flange_pose[0],  flange_pose[1], flange_pose[2], flange_pose[3], flange_pose[4], flange_pose[5] ]
+  gocatorDaemon.KeepRobotPose(flangePose_list)
+  return flange_pose
+  end
+  # end: URCap Installation Node
+  # begin: URCap Installation Node
+  #   Source: Robotiq_2-Finger_Adaptive_Gripper, 1.0.2, Robotiq Inc.
+  #   Type: Gripper
+  
+  ###########################################
+  #######Gripper urcap preamble start########
+  #######Version 1.0.2########
+  
+  #aliases for the gripper variable names
+  ACT = 1
+  GTO = 2
+  ATR = 3
+  ARD = 4
+  FOR = 5
+  SPE = 6
+  OBJ = 7
+  STA = 8
+  FLT = 9
+  POS = 10
+  PRE = 11
+  
+  def rq_init_connection(gripper_sid=9, gripper_socket="gripper_socket"):
+  	socket_open("127.0.0.1",63352, gripper_socket)
+  	socket_set_var("SID", gripper_sid,  gripper_socket)
+  	ack = socket_read_byte_list(3, gripper_socket)
+  end
+  
+  def rq_activate(gripper_socket="gripper_socket"):
+  	rq_gripper_act = 0
+  	rq_set_var(ACT,1, gripper_socket)
+  end
+  
+  def rq_activate_and_wait(gripper_socket="gripper_socket"):
+  	rq_activate(gripper_socket)
+  
+  	while(not rq_is_gripper_activated(gripper_socket)):
+  		# wait for activation completed
+  	end
+  end
+  
+  def rq_stop(gripper_socket="gripper_socket"):
+  	rq_set_var(GTO,0, gripper_socket)
+  end
+  
+  def rq_reset(gripper_socket="gripper_socket"):
+  	rq_gripper_act = 0
+  	rq_obj_detect = 0
+  	rq_mov_complete = 0
+  
+  	rq_set_var(ACT,0, gripper_socket)
+  	rq_set_var(ATR,0, gripper_socket)
+  end
+  
+  def rq_auto_release_open_and_wait(gripper_socket="gripper_socket"):
+  
+  	rq_set_var(ARD,0, gripper_socket)
+  	rq_set_var(ACT,1, gripper_socket)
+  	rq_set_var(ATR,1, gripper_socket)
+  
+  	gFLT = rq_get_var(FLT, 2, gripper_socket)
+  
+  	while(not is_FLT_autorelease_completed(gFLT)):
+  		gFLT = rq_get_var(FLT, 2, gripper_socket)
+  	end
+  end
+  
+  def rq_auto_release_close_and_wait(gripper_socket="gripper_socket"):
+  	rq_set_var(ARD,1, gripper_socket)
+  	rq_set_var(ACT,1, gripper_socket)
+  	rq_set_var(ATR,1, gripper_socket)
+  
+  	gFLT = rq_get_var(FLT, 2, gripper_socket)
+  
+  	while(not is_FLT_autorelease_completed(gFLT)):
+  		gFLT = rq_get_var(FLT, 2, gripper_socket)
+  	end
+  end
+  
+  def rq_set_force(force, gripper_socket="gripper_socket"):
+  	rq_set_var(FOR,force, gripper_socket)
+  end
+  
+  def rq_set_speed(speed, gripper_socket="gripper_socket"):
+  	rq_set_var(SPE,speed, gripper_socket)
+  end
+  
+  def rq_open(gripper_socket="gripper_socket"):
+  	rq_move(0, gripper_socket)
+  end
+  
+  def rq_close(gripper_socket="gripper_socket"):
+  	rq_move(255, gripper_socket)
+  end
+  
+  def rq_open_and_wait(gripper_socket="gripper_socket"):
+  	rq_move_and_wait(0, gripper_socket)
+  end
+  
+  def rq_close_and_wait(gripper_socket="gripper_socket"):
+  	rq_move_and_wait(255, gripper_socket)
+  end
+  
+  def rq_move(pos, gripper_socket="gripper_socket"):
+  	rq_mov_complete = 0
+  	rq_obj_detect = 0
+  
+  	rq_set_pos(pos, gripper_socket)
+  	rq_go_to(gripper_socket)
+  end
+  
+  def rq_move_and_wait(pos, gripper_socket="gripper_socket"):
+  	rq_move(pos, gripper_socket)
+  
+  	while (not rq_is_motion_complete(gripper_socket)):
+  		# wait for motion completed
+  		sleep(0.01)
+  		sync()
+  	end
+  
+  	# following code used for compatibility with previous versions
+  	rq_is_object_detected(gripper_socket)
+  
+  	if (rq_obj_detect != 1):
+  		rq_mov_complete = 1
+  	end
+  end
+  
+  def rq_go_to(gripper_socket="gripper_socket"):
+  	rq_set_var(GTO,1, gripper_socket)
+  end
+  
+  # reset the rGTO to prevent movement and
+  # set the position
+  def rq_set_pos(pos, gripper_socket="gripper_socket"):
+  	rq_set_var(GTO,0, gripper_socket)
+  
+  	rq_set_var(POS, pos, gripper_socket)
+  
+  	gPRE = rq_get_var(PRE, 3, gripper_socket)
+  	pre = (gPRE[1] - 48)*100 + (gPRE[2] -48)*10 + gPRE[3] - 48
+  	sync()
+  	while (pre != pos):
+          rq_set_var(POS, pos, gripper_socket)
+  		gPRE = rq_get_var(PRE, 3, gripper_socket)
+  		pre = (gPRE[1] - 48)*100 + (gPRE[2] -48)*10 + gPRE[3] - 48
+  		sync()
+  	end
+  end
+  
+  def rq_is_motion_complete(gripper_socket="gripper_socket"):
+  	rq_mov_complete = 0
+  
+  	gOBJ = rq_get_var(OBJ, 1, gripper_socket)
+  	sleep(0.01)
+  
+  	if (is_OBJ_gripper_at_position(gOBJ)):
+  		rq_mov_complete = 1
+  		return True
+  	end
+  
+  	if (is_OBJ_object_detected(gOBJ)):
+  		rq_mov_complete = 1
+  		return True
+  	end
+  
+  	return False
+  
+  end
+  
+  def rq_is_gripper_activated(gripper_socket="gripper_socket"):
+  	gSTA = rq_get_var(STA, 1, gripper_socket)
+  
+  	if(is_STA_gripper_activated(gSTA)):
+  		rq_gripper_act = 1
+  		return True
+  	else:
+  		rq_gripper_act = 0
+  		return False
+  	end
+  end
+  
+  def rq_is_object_detected(gripper_socket="gripper_socket"):
+  	gOBJ = rq_get_var(OBJ, 1, gripper_socket)
+  
+  	if(is_OBJ_object_detected(gOBJ)):
+  		rq_obj_detect = 1
+  		return True
+  	else:
+  		rq_obj_detect = 0
+  		return False
+  	end
+  end
+  
+  def rq_current_pos(gripper_socket="gripper_socket"):
+  	rq_pos = socket_get_var("POS",gripper_socket)
+  	sync()
+      return rq_pos
+  end
+  
+  def rq_print_gripper_fault_code(gripper_socket="gripper_socket"):
+  	gFLT = rq_get_var(FLT, 2, gripper_socket)
+  
+  	if(is_FLT_no_fault(gFLT)):
+  		textmsg("Gripper Fault : ", "No Fault (0x00)")
+  	elif (is_FLT_action_delayed(gFLT)):
+  		textmsg("Gripper Fault : ", "Priority Fault: Action delayed, initialization must be completed prior to action (0x05)")
+  	elif (is_FLT_not_activated(gFLT)):
+  		textmsg("Gripper Fault : ", "Priority Fault: The activation must be set prior to action (0x07)")
+  	elif (is_FLT_autorelease_in_progress(gFLT)):
+  		textmsg("Gripper Fault : ", "Minor Fault: Automatic release in progress (0x0B)")
+  	elif (is_FLT_overcurrent(gFLT)):
+  		textmsg("Gripper Fault : ", "Minor Fault: Overcurrent protection tiggered (0x0E)")
+  	elif (is_FLT_autorelease_completed(gFLT)):
+  		textmsg("Gripper Fault : ", "Major Fault: Automatic release completed (0x0F)")
+  	else:
+  		textmsg("Gripper Fault : ", "Unkwown Fault")
+  	end
+  end
+  
+  def rq_print_gripper_num_cycles(gripper_socket="gripper_socket"):
+  	socket_send_string("GET NCY",gripper_socket)
+  	sync()
+  	string_from_server = socket_read_string(gripper_socket)
+  	sync()
+  
+  	if(string_from_server == "0"):
+  		textmsg("Gripper Cycle Number : ", "Number of cycles is unreachable.")
+  	else:
+  		textmsg("Gripper Cycle Number : ", string_from_server)
+  	end
+  end
+  
+  def rq_print_gripper_driver_state(gripper_socket="gripper_socket"):
+  	socket_send_string("GET DST",gripper_socket)
+  	sync()
+  	string_from_server = socket_read_string(gripper_socket)
+  	sync()
+  
+  	if(string_from_server == "0"):
+  		textmsg("Gripper Driver State : ", "RQ_STATE_INIT")
+  	elif(string_from_server == "1"):
+  		textmsg("Gripper Driver State : ", "RQ_STATE_LISTEN")
+  	elif(string_from_server == "2"):
+  		textmsg("Gripper Driver State : ", "RQ_STATE_READ_INFO")
+  	elif(string_from_server == "3"):
+  		textmsg("Gripper Driver State : ", "RQ_STATE_ACTIVATION")
+  	else:
+  		textmsg("Gripper Driver State : ", "RQ_STATE_RUN")
+  	end
+  end
+  
+  def rq_print_gripper_serial_number():
+  	#socket_send_string("GET SNU",gripper_socket)
+  	#sync()
+  	#string_from_server = socket_read_string(gripper_socket)
+  	#sync()
+  	#textmsg("Gripper Serial Number : ", string_from_server)
+  end
+  
+  def rq_print_gripper_firmware_version(gripper_socket="gripper_socket"):
+  	socket_send_string("GET FWV",gripper_socket)
+  	sync()
+  	string_from_server = socket_read_string(gripper_socket)
+  	sync()
+  	textmsg("Gripper Firmware Version : ", string_from_server)
+  end
+  
+  def rq_print_gripper_driver_version(gripper_socket="gripper_socket"):
+  	socket_send_string("GET VER",gripper_socket)
+  	sync()
+  	string_from_server = socket_read_string(gripper_socket)
+  	sync()
+  	textmsg("Gripper Driver Version : ", string_from_server)
+  end
+  
+  def rq_print_gripper_probleme_connection(gripper_socket="gripper_socket"):
+  	socket_send_string("GET PCO",gripper_socket)
+  	sync()
+  	string_from_server = socket_read_string(gripper_socket)
+  	sync()
+  	if (string_from_server == "0"):
+  		textmsg("Gripper Connection State : ", "No connection problem detected")
+  	else:
+  		textmsg("Gripper Connection State : ", "Connection problem detected")
+  	end
+  end
+  
+  # Returns True if list_of_bytes is [3, 'a', 'c', 'k']
+  def is_ack(list_of_bytes):
+  
+  	# list length is not 3
+  	if (list_of_bytes[0] != 3):
+  		return False
+  	end
+  
+  	# first byte not is 'a'?
+  	if (list_of_bytes[1] != 97):
+  		return False
+  	end
+  
+  	# first byte not is 'c'?
+  	if (list_of_bytes[2] != 99):
+  		return False
+  	end
+  
+  	# first byte not is 'k'?
+  	if (list_of_bytes[3] != 107):
+  		return False
+  	end
+  
+  	return True
+  end
+  
+  # Returns True if list_of_bytes is not [3, 'a', 'c', 'k']
+  def is_not_ack(list_of_bytes):
+  	if (is_ack(list_of_bytes)):
+  		return False
+  	else:
+  		return True
+  	end
+  end
+  
+  def is_STA_gripper_activated (list_of_bytes):
+  
+  	# list length is not 1
+  	if (list_of_bytes[0] != 1):
+  		return False
+  	end
+  
+  	# byte is '3'?
+  	if (list_of_bytes[1] == 51):
+  		return True
+  	end
+  
+  	return False
+  end
+  
+  # Returns True if list_of_byte is [1, '1'] or [1, '2']
+  # Used to test OBJ = 0x1 or OBJ = 0x2
+  def is_OBJ_object_detected (list_of_bytes):
+  
+  	# list length is not 1
+  	if (list_of_bytes[0] != 1):
+  		return False
+  	end
+  
+  	# byte is '2'?
+  	if (list_of_bytes[1] == 50):
+  		return True
+  	end
+  
+  	# byte is '1'?
+  	if (list_of_bytes[1]  == 49):
+  		return True
+  	end
+  
+  	return False
+  
+  end
+  
+  # Returns True if list_of_byte is [1, '3']
+  # Used to test OBJ = 0x3
+  def is_OBJ_gripper_at_position (list_of_bytes):
+  
+  	# list length is not 1
+  	if (list_of_bytes[0] != 1):
+  		return False
+  	end
+  
+  	# byte is '3'?
+  	if (list_of_bytes[1] == 51):
+  		return True
+  	end
+  
+  	return False
+  end
+  
+  def is_not_OBJ_gripper_at_position (list_of_bytes):
+  
+  	if (is_OBJ_gripper_at_position(list_of_bytes)):
+  		return False
+  	else:
+  		return True
+  	end
+  end
+  
+  def is_FLT_no_fault(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '0'?
+  	if (list_of_bytes[1] != 48):
+  		return False
+  	end
+  
+  	# second byte is '0'?
+  	if (list_of_bytes[2] != 48):
+  		return False
+  	end
+  
+  	return True
+  
+  end
+  
+  def is_FLT_action_delayed(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '0'?
+  	if (list_of_bytes[1] != 48):
+  		return False
+  	end
+  
+  	# second byte is '5'?
+  	if (list_of_bytes[2] != 53):
+  		return False
+  	end
+  
+  	return True
+  end
+  
+  def is_FLT_not_activated(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '0'?
+  	if (list_of_bytes[1] != 48):
+  		return False
+  	end
+  
+  	# second byte is '7'?
+  	if (list_of_bytes[2] != 55):
+  		return False
+  	end
+  
+  	return True
+  end
+  
+  def is_FLT_autorelease_in_progress(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '1'?
+  	if (list_of_bytes[1] != 49):
+  		return False
+  	end
+  
+  	# second byte is '1'?
+  	if (list_of_bytes[2] != 49):
+  		return False
+  	end
+  
+  	return True
+  
+  end
+  
+  def is_FLT_overcurrent(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '1'?
+  	if (list_of_bytes[1] != 49):
+  		return False
+  	end
+  
+  	# second byte is '4'?
+  	if (list_of_bytes[2] != 52):
+  		return False
+  	end
+  
+  	return True
+  
+  end
+  
+  def is_FLT_autorelease_completed(list_of_bytes):
+  
+  	# list length is not 2
+  	if (list_of_bytes[0] != 2):
+  		return False
+  	end
+  
+  	# first byte is '1'?
+  	if (list_of_bytes[1] != 49):
+  		return False
+  	end
+  
+  	# second byte is '5'?
+  	if (list_of_bytes[2] != 53):
+  		return False
+  	end
+  
+  	return True
+  
+  end
+  
+  def rq_set_var(var_name, var_value, gripper_socket="gripper_socket"):
+  
+  	sync()
+  	if (var_name == ACT):
+  		socket_set_var("ACT", var_value, gripper_socket)
+  	elif (var_name == GTO):
+  		socket_set_var("GTO", var_value, gripper_socket)
+  	elif (var_name == ATR):
+  		socket_set_var("ATR", var_value, gripper_socket)
+  	elif (var_name == ARD):
+  		socket_set_var("ARD", var_value, gripper_socket)
+  	elif (var_name == FOR):
+  		socket_set_var("FOR", var_value, gripper_socket)
+  	elif (var_name == SPE):
+  		socket_set_var("SPE", var_value, gripper_socket)
+  	elif (var_name == POS):
+  		socket_set_var("POS", var_value, gripper_socket)
+  	else:
+  	end
+  
+  	sync()
+  	ack = socket_read_byte_list(3, gripper_socket)
+  	sync()
+  
+  	while(is_not_ack(ack)):
+  
+  		textmsg("rq_set_var : retry", " ...")
+  		textmsg("rq_set_var : var_name = ", var_name)
+  		textmsg("rq_set_var : var_value = ", var_value)
+  
+  		if (ack[0] != 0):
+  			textmsg("rq_set_var : invalid ack value = ", ack)
+  		end
+  
+  		socket_set_var(var_name , var_value,gripper_socket)
+  		sync()
+  		ack = socket_read_byte_list(3, gripper_socket)
+  		sync()
+  	end
+  end
+  
+  
+  def rq_get_var(var_name, nbr_bytes, gripper_socket="gripper_socket"):
+  
+  	if (var_name == FLT):
+  		socket_send_string("GET FLT",gripper_socket)
+  		sync()
+  	elif (var_name == OBJ):
+  		socket_send_string("GET OBJ",gripper_socket)
+  		sync()
+  	elif (var_name == STA):
+  		socket_send_string("GET STA",gripper_socket)
+  		sync()
+  	elif (var_name == PRE):
+  		socket_send_string("GET PRE",gripper_socket)
+  		sync()
+  	else:
+  	end
+  
+  	var_value = socket_read_byte_list(nbr_bytes, gripper_socket)
+  	sync()
+  
+  	return var_value
+  end
+  
+  ############################################
+  # normalized functions (maps 0-100 to 0-255)
+  ############################################
+  def rq_set_force_norm(force_norm, gripper_socket="gripper_socket"):
+      force_gripper = norm_to_gripper(force_norm)
+      rq_set_force(force_gripper, gripper_socket)
+  end
+  
+  def rq_set_speed_norm(speed_norm, gripper_socket="gripper_socket"):
+      speed_gripper = norm_to_gripper(speed_norm)
+      rq_set_speed(speed_gripper, gripper_socket)
+  end
+  
+  def rq_move_norm(pos_norm, gripper_socket="gripper_socket"):
+      pos_gripper = norm_to_gripper(pos_norm)
+      rq_move(pos_gripper, gripper_socket)
+  end
+  
+  def rq_move_and_wait_norm(pos_norm, gripper_socket="gripper_socket"):
+      pos_gripper = norm_to_gripper(pos_norm)
+      rq_move_and_wait(pos_gripper, gripper_socket)
+  end
+  
+  def rq_set_pos_norm(pos_norm, gripper_socket="gripper_socket"):
+      pos_gripper = norm_to_gripper(pos_norm)
+      rq_set_pos(pos_gripper, gripper_socket)
+  end
+  
+  
+  def rq_current_pos_norm(gripper_socket="gripper_socket"):
+      pos_gripper = rq_current_pos(gripper_socket)
+      pos_norm = gripper_to_norm(pos_gripper)
+      return pos_norm
+  end
+  
+  def gripper_to_norm(value_gripper):
+      value_norm = (value_gripper / 255) * 100
+      return floor(value_norm)
+  end
+  
+  def norm_to_gripper(value_norm):
+      value_gripper = (value_norm / 100) * 255
+      return ceil(value_gripper)
+  end
+  
+  def rq_get_position():
+      return rq_current_pos_norm()
+  end
+  #########################################
+  rq_obj_detect = 0
+  socket_open("127.0.0.1",63352,"gripper_socket")
+  
+  #######Vision urcap preamble end##########
+  ###########################################
+  
+  # end: URCap Installation Node
+  $ 1 "BeforeStart"
+  $ 2 "Set RoboOperacional=Off"
+  set_standard_digital_out(1, False)
+  $ 3 "RecolherPeca≔ False "
+  global RecolherPeca=  False  
+  $ 4 "Set PecaRecolhida=Off"
+  set_standard_digital_out(2, False)
+  $ 5 "RetirarPeca≔ False "
+  global RetirarPeca=  False  
+  $ 6 "open≔socket_open('192.168.114.51',5024)"
+  global open=socket_open("192.168.114.51",5024)
+  $ 7 "Loop open≟ False "
+  while (open ==   False  ):
+    $ 8 "open≔socket_open('192.168.114.51',5024)"
+    global open=socket_open("192.168.114.51",5024)
+  end
+  $ 9 "targetPos≔p[0,0,0,0,0,0]"
+  global targetPos=p[0,0,0,0,0,0]
+  $ 10 "'# Configuracao variaveis'"
+  # '# Configuracao variaveis'
+  $ 11 "var_from≔p[0,0,0.05,0,0,0]"
+  global var_from=p[0,0,0.05,0,0,0]
+  $ 12 "var_from≔p[0,0,-0.05,0,0,0]"
+  global var_from=p[0,0,-0.05,0,0,0]
+  $ 13 "var_from≔p[0.1,0,0,0,0,0]"
+  global var_from=p[0.1,0,0,0,0,0]
+  $ 14 "var_from≔p[-0.1,0,0,0,0,0]"
+  global var_from=p[-0.1,0,0,0,0,0]
+  $ 15 "P_dep_des≔p[0,0,150/1000,0,0,0]"
+  global P_dep_des=p[0,0,150/1000,0,0,0]
+  $ 16 "P_dep_sub≔p[0,0,-150/1000,0,0,0]"
+  global P_dep_sub=p[0,0,-150/1000,0,0,0]
+  while (True):
+    $ 17 "Robot Program"
+    $ 18 "'# Ligar Camara'"
+    # '# Ligar Camara'
+    $ 19 "Loop open≟ False "
+    while (open ==   False  ):
+      $ 20 "open≔socket_open('192.168.114.51',5024)"
+      global open=socket_open("192.168.114.51",5024)
+    end
+    $ 21 "Set RoboOperacional=On"
+    set_standard_digital_out(1, True)
+    $ 22 "MoveJ"
+    $ 23 "P_init" "breakAfter"
+    movej(get_inverse_kin(p[-.700000000000, -.100000000000, .500000000000, 3.140000000000, .000000000000, .000000000000], qnear=[-0.09447760196890087, -1.537221793334841, 1.80077525854355, -1.8345441615282496, -1.5743831911636263, -4.805673117946199]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 24 "Loop RecolherPeca≟ False "
+    while (RecolherPeca ==   False  ):
+      $ 25 "RecolherPeca≔read_input_boolean_register(0)"
+      global RecolherPeca=read_input_boolean_register(0)
+    end
+    $ 26 "P_poscap" "breakAfter"
+    movej(get_inverse_kin(p[-.528532745937, .649105253064, .699929669920, 2.243336889062, -2.196734607710, -.000038747499], qnear=[-1.0869258085833948, -1.3433335463153284, 1.2267427444458008, -1.4540136496173304, -1.5751164595233362, -4.246188704167501]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 27 "receiveFromServ≔[0,0,0,0,0,0,0]"
+    global receiveFromServ=[0,0,0,0,0,0,0]
+    $ 29 "receiveFromServ≔socket_read_ascii_float(6)"
+    global receiveFromServ=socket_read_ascii_float(6)
+    $ 30 "Loop receiveFromServ[0]≠6"
+    while (receiveFromServ[0] != 6):
+      $ 31 "Wait: 2.0"
+      sleep(2.0)
+      $ 32 "sendToServer≔'10@'"
+      global sendToServer="10@"
+      $ 33 "socket_send_string(sendToServer)"
+      socket_send_string(sendToServer)
+      $ 34 "receiveFromServ≔socket_read_ascii_float(6)"
+      global receiveFromServ=socket_read_ascii_float(6)
+    end
+    $ 35 "GetCameraData Folder"
+    $ 36 "'# Here we should read the data from the camera'"
+    # '# Here we should read the data from the camera'
+    $ 37 "Ry≔receiveFromServ[4]"
+    global Ry=receiveFromServ[4]
+    $ 38 "x_cam≔receiveFromServ[2]"
+    global x_cam=receiveFromServ[2]
+    $ 39 "y_cam≔receiveFromServ[3]"
+    global y_cam=receiveFromServ[3]
+    $ 40 "NewX≔receiveFromServ[5]"
+    global NewX=receiveFromServ[5]
+    $ 41 "NewY≔receiveFromServ[6]"
+    global NewY=receiveFromServ[6]
+    $ 42 "Calculate Folder"
+    $ 43 "'# Convert mm to m and deg to rad'"
+    # '# Convert mm to m and deg to rad'
+    $ 45 "target1≔p[x_cam/1000,y_cam/1000,0,0,0,0]"
+    global target1=p[x_cam/1000,y_cam/1000,0,0,0,0]
+    $ 46 "target2≔p[0,0,0,0,0,Ry]"
+    global target2=p[0,0,0,0,0,Ry]
+    $ 47 "target3≔p[NewX/1000,NewY/1000,0,0,0,0]"
+    global target3=p[NewX/1000,NewY/1000,0,0,0,0]
+    $ 48 "target4≔p[0,0,285/1000,0,0,0]"
+    global target4=p[0,0,285/1000,0,0,0]
+    $ 49 "MoveToCamPose"
+    $ 50 "MoveL"
+    $ 51 "target1" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), target1), a=1.2, v=0.25)
+    $ 52 "Wait: 0.5"
+    sleep(0.5)
+    $ 53 "target2" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), target2), a=1.2, v=0.25)
+    $ 54 "Wait: 0.5"
+    sleep(0.5)
+    $ 55 "target3" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), target3), a=1.2, v=0.25)
+    $ 56 "Wait: 0.5"
+    sleep(0.5)
+    $ 57 "target4" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), target4), a=1.2, v=0.25)
+    $ 58 "Set Ar=On"
+    set_standard_digital_out(0, True)
+    $ 59 "Wait: 2.0"
+    sleep(2.0)
+    $ 60 "P_poscap" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(p[-.528532745937, .649105253064, .699929669920, 2.243336889062, -2.196734607710, -.000038747499], a=1.2, v=0.25, r=0.05)
+    $ 61 "'Registo para PLC'"
+    # 'Registo para PLC'
+    $ 62 "Set PecaRecolhida=On"
+    set_standard_digital_out(2, True)
+    $ 63 "RecolherPeca≔ False "
+    global RecolherPeca=  False  
+    $ 64 "Wait: 0.1"
+    sleep(0.1)
+    $ 65 "Set PecaRecolhida=Off"
+    set_standard_digital_out(2, False)
+    $ 66 "'Movimentos para Fagor'"
+    # 'Movimentos para Fagor'
+    $ 67 "MoveJ"
+    $ 69 "P_aproxFagor" "breakAfter"
+    movej(get_inverse_kin(p[-.390992791624, -.615088700854, .610275157738, 2.189373485285, -2.225835266049, -.063752740124], qnear=[0.7806411981582642, -1.531694237385885, 1.6030430793762207, -1.6610773245440882, -1.617181126271383, -2.3426933924304407]), a=1.3962634015954636, v=1.0471975511965976, r=0.009999999999999998)
+    $ 70 "MoveL"
+    $ 71 "P_Fagor1" "breakAfter"
+    movel(pose_trans(Base, p[-0.43939694373411126,-0.652650245763425,0.605499900378427,2.189598096828884,-2.2257492377881,-0.06371546413737256]), a=1.2, v=0.25, r=0.05)
+    $ 72 "P_Fagor2" "breakAfter"
+    movel(pose_trans(Base, p[-0.4394624760767844,-0.6526423448526866,0.4627786325989119,2.189687635793589,-2.2256738503268654,-0.06374443400188574]), a=1.2, v=0.25, r=0.05)
+    $ 73 "P_Fagor3" "breakAfter"
+    movel(pose_trans(Base, p[-0.4404189207302956,-0.7239177879287102,0.42435303922631235,2.18931745490282,-2.22579901566184,-0.06377090359203307]), a=1.2, v=0.25, r=0.028999999999999998)
+    $ 74 "P_Fagor4" "breakAfter"
+    movel(pose_trans(Base, p[-0.40946938944201206,-0.7311784922947363,0.3513472814387975,2.189723112215969,-2.225581511433405,-0.06432065813177222]), a=1.2, v=0.25)
+    $ 75 "Set Ar=Off"
+    set_standard_digital_out(0, False)
+    $ 76 "P_Fagor5" "breakAfter"
+    movel(pose_trans(Base, p[-0.4402420216196626,-0.7240147470872927,0.4855861323408822,2.1896859082266302,-2.2257372390698684,-0.06366605947779923]), a=1.2, v=0.25)
+    $ 77 "P_Fagor6" "breakAfter"
+    movel(pose_trans(Base, p[-0.4393026629557215,-0.6402981420928785,0.48554517932774965,2.1898042179240127,-2.2258591231882914,-0.06377026971530414]), a=1.2, v=0.25)
+    $ 78 "'Registo para PLC'"
+    # 'Registo para PLC'
+    $ 79 "Set PecaColocada=On"
+    set_standard_digital_out(3, True)
+    $ 80 "Wait: 0.1"
+    sleep(0.1)
+    $ 81 "Set PecaColocada=Off"
+    set_standard_digital_out(3, False)
+    $ 82 "'Esperar Maquinacao'"
+    # 'Esperar Maquinacao'
+    $ 83 "MoveJ"
+    $ 84 "Waypoint_9" "breakAfter"
+    movej(get_inverse_kin(p[-.436536042746, -.416988677502, .672545081473, 2.189787071559, -2.225823272551, -.063729175804], qnear=[0.4900166094303131, -1.7461784521686, 1.694819450378418, -1.5490334669696253, -1.6096766630755823, -2.633157793675558]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 85 "Loop RetirarPeca≟ False "
+    while (RetirarPeca ==   False  ):
+      $ 86 "RetirarPeca≔read_input_boolean_register(2)"
+      global RetirarPeca=read_input_boolean_register(2)
+    end
+    $ 88 "MoveJ"
+    $ 90 "P_aproxFagor" "breakAfter"
+    movej(get_inverse_kin(p[-.390992791624, -.615088700854, .610275157738, 2.189373485285, -2.225835266049, -.063752740124], qnear=[0.7806411981582642, -1.531694237385885, 1.6030430793762207, -1.6610773245440882, -1.617181126271383, -2.3426933924304407]), a=1.3962634015954636, v=1.0471975511965976)
+    $ 91 "MoveL"
+    $ 92 "P_Fagor1_1" "breakAfter"
+    movel(pose_trans(Base, p[-0.43939694373411126,-0.652650245763425,0.605499900378427,2.189598096828884,-2.2257492377881,-0.06371546413737256]), a=1.2, v=0.25, r=0.05)
+    $ 93 "P_Fagor2_1" "breakAfter"
+    movel(pose_trans(Base, p[-0.4394624760767844,-0.6526423448526866,0.4627786325989119,2.189687635793589,-2.2256738503268654,-0.06374443400188574]), a=1.2, v=0.25, r=0.05)
+    $ 94 "P_Fagor3_1" "breakAfter"
+    movel(pose_trans(Base, p[-0.4404189207302956,-0.7239177879287102,0.42435303922631235,2.18931745490282,-2.22579901566184,-0.06377090359203307]), a=1.2, v=0.25, r=0.028999999999999998)
+    $ 95 "P_Fagor4_2" "breakAfter"
+    movel(pose_trans(Base, p[-0.40946938944201206,-0.7311784922947363,0.3513472814387975,2.189723112215969,-2.225581511433405,-0.06432065813177222]), a=1.2, v=0.25)
+    $ 96 "Set Ar=On"
+    set_standard_digital_out(0, True)
+    $ 97 "Wait: 2.0"
+    sleep(2.0)
+    $ 98 "P_Fagor5_1" "breakAfter"
+    movel(pose_trans(Base, p[-0.4402420216196626,-0.7240147470872927,0.4855861323408822,2.1896859082266302,-2.2257372390698684,-0.06366605947779923]), a=1.2, v=0.25, r=0.05)
+    $ 99 "P_Fagor6_1" "breakAfter"
+    movel(pose_trans(Base, p[-0.4393026629557215,-0.6402981420928785,0.48554517932774965,2.1898042179240127,-2.2258591231882914,-0.06377026971530414]), a=1.2, v=0.25, r=0.032)
+    $ 100 "'Registo para PLC'"
+    # 'Registo para PLC'
+    $ 101 "Set PecaRetirada=On"
+    set_standard_digital_out(4, True)
+    $ 102 "RetirarPeca≔ False "
+    global RetirarPeca=  False  
+    $ 103 "Wait: 0.1"
+    sleep(0.1)
+    $ 104 "Set PecaRetirada=Off"
+    set_standard_digital_out(4, False)
+    $ 105 "MoveJ"
+    $ 106 "P_Dep" "breakAfter"
+    movej(get_inverse_kin(p[-.791867395911, .171019117700, .423991017176, 3.133898415972, .038071370079, -.177518151067], qnear=[-0.42410213152040654, -1.3382304350482386, 1.7355751991271973, -2.0701029936419886, -1.5263026396380823, -5.1582470575915735]), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+    $ 107 "Set Count_Deposito=Count_Deposito+1"
+    Count_Deposito = Count_Deposito + 1
+    $ 108 "If Count_Deposito≟1"
+    if (Count_Deposito == 1):
+      $ 109 "MoveJ"
+      $ 110 "P_Dep_aprox1_1" "breakAfter"
+      movej(get_inverse_kin(p[-1.220239168814, .046601180518, .300000000000, -3.079329240966, -.032088518006, .130138718009], qnear=[-0.17062135982363724, -0.5558738041317994, 0.6816888542130242, -1.7907515754992938, -1.6219331740324066, -4.905555096519162]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+    else:
+      $ 111 "ElseIf Count_Deposito≟2"
+      if (Count_Deposito == 2):
+        $ 112 "MoveJ"
+        $ 113 "P_Dep_aprox2" "breakAfter"
+        movej(get_inverse_kin(p[-1.227991134278, .180871950125, .300000000000, -3.123824373606, -.036186356656, .153893436833], qnear=[-0.2808093230141715, -0.5027225462798812, 0.5799720976365598, -1.7466369336137486, -1.5638138335248986, -5.0151887447026215]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+      else:
+        $ 114 "ElseIf Count_Deposito≟3"
+        if (Count_Deposito == 3):
+          $ 115 "MoveJ"
+          $ 116 "P_Dep_aprox3" "breakAfter"
+          movej(get_inverse_kin(p[-1.220837773910, .295711669200, .300000000000, -3.123622402114, -.036077372589, .153936265252], qnear=[-0.37116491728209855, -0.45425157973091146, 0.48500693354241076, -1.6984960186323956, -1.5553389055473446, -5.104921066807144]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+        else:
+          $ 117 "ElseIf Count_Deposito≟4"
+          if (Count_Deposito == 4):
+            $ 118 "MoveJ"
+            $ 119 "P_Dep_apox4" "breakAfter"
+            movej(get_inverse_kin(p[-1.096003503134, .046084856044, .300000000000, -3.123719275020, -.036278379065, .153959840477], qnear=[-0.19401893981090979, -0.8096750985210868, 1.1531786077125448, -2.013892540246636, -1.5712822558035988, -4.929621334057035]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+          else:
+            $ 120 "ElseIf Count_Deposito≟5"
+            if (Count_Deposito == 5):
+              $ 121 "MoveJ"
+              $ 122 "P_Dep_aprox5" "breakAfter"
+              movej(get_inverse_kin(p[-1.098452271737, .178623518212, .300000000000, 3.140169385790, -.000177233063, -.000874789694], qnear=[-0.31064882448621844, -0.7736423623566626, 1.0666923924229108, -1.8642872355295923, -1.576488841320998, -5.022330000658162]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+            else:
+              $ 123 "ElseIf Count_Deposito≟6"
+              if (Count_Deposito == 6):
+                $ 124 "MoveJ"
+                $ 125 "P_Dep_aprox6" "breakAfter"
+                movej(get_inverse_kin(p[-1.102071071548, .300705894899, .300000000000, 3.140178154123, .000098509512, -.000995833577], qnear=[-0.4118998292993368, -0.7184068245734885, 0.9663736770193214, -1.8191227780291621, -1.5766810479424294, -5.123612365115598]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+              else:
+                $ 126 "ElseIf Count_Deposito≟7"
+                if (Count_Deposito == 7):
+                  $ 127 "MoveJ"
+                  $ 128 "P_Dep_aprox7" "breakAfter"
+                  movej(get_inverse_kin(p[-.974911440506, .040044796122, .300000000000, 3.140068722253, -.000145549085, -.000868259252], qnear=[-0.2117121525016259, -0.9961918160641048, 1.4511615393510253, -2.0263333917552906, -1.5754415908615202, -4.923928976239999]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+                else:
+                  $ 129 "ElseIf Count_Deposito≟8"
+                  if (Count_Deposito == 8):
+                    $ 130 "MoveJ"
+                    $ 131 "P_Dep_aprox8" "breakAfter"
+                    movej(get_inverse_kin(p[-.976809974567, .168063405136, .300000000000, 3.140162968616, -.000102023807, -.001057545014], qnear=[-0.33836997529477486, -0.9728979087370115, 1.412562733212094, -2.0109687756743604, -1.5755811420786143, -5.050565400037554]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+                  else:
+                    $ 132 "ElseIf Count_Deposito≟9"
+                    if (Count_Deposito == 9):
+                      $ 133 "MoveJ"
+                      $ 134 "P_Dep_aprox9" "breakAfter"
+                      movej(get_inverse_kin(p[-.974390502289, .297298855186, .300000000000, 3.140178466608, .000073813189, -.000739037874], qnear=[-0.4595407765317656, -0.9304505352832955, 1.3411030574839773, -1.9815900080473696, -1.5758679254470636, -5.171753663832463]), a=1.3962634015954636, v=1.0471975511965976, r=0.005)
+                      $ 135 "Count_Deposito≔0"
+                      global Count_Deposito=0
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    $ 136 "MoveL"
+    $ 138 "P_dep_des" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), P_dep_des), a=1.2, v=0.25)
+    $ 139 "Set Ar=Off"
+    set_standard_digital_out(0, False)
+    $ 140 "Wait: 1.0"
+    sleep(1.0)
+    $ 141 "P_dep_sub" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movel(pose_trans(get_forward_kin(), P_dep_sub), a=1.2, v=0.25, r=0.05)
+    $ 142 "Set PecaDepositada=On"
+    set_standard_digital_out(5, True)
+    $ 143 "Wait: 0.1"
+    sleep(0.1)
+    $ 144 "Set PecaDepositada=Off"
+    set_standard_digital_out(5, False)
+    $ 145 "MoveJ"
+    $ 146 "P_init" "breakAfter"
+    movej(get_inverse_kin(p[-.700000000000, -.100000000000, .500000000000, 3.140000000000, .000000000000, .000000000000], qnear=[-0.09447760196890087, -1.537221793334841, 1.80077525854355, -1.8345441615282496, -1.5743831911636263, -4.805673117946199]), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+  end
+end
