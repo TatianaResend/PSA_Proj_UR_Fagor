@@ -1,0 +1,18 @@
+a= msg.payload.data1; // data de saída do tapete
+b= msg.payload.hora1; //tempo de saída do tapete
+c= msg.payload.code1; // referência
+d=msg.payload.posição1; // estado ou posição
+
+// Saída do Tapete
+
+
+if (b!=='00:00:00' || d!==""){   //se o tempo não for 00:00:00 ou se a posição for nula não escrever
+
+msg.topic="INSERT IGNORE INTO `rastreabilidade2`(`Data`,`Referência`, `Estado`, `Hora`)  VALUES ('" +a+ "', '" +c+ "','"+d+"', '" +b+ "');"
+
+
+
+return msg;
+
+
+}
