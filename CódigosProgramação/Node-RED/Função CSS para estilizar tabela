@@ -1,0 +1,15 @@
+<style>
+
+
+/* Formatar cabeçalho da tabela*/
+  .tabulator-col-title {background-color:#964B00; text-align: center; color: black }  /*configurar a cor de background e o tipo de letra do titulo***/
+  .tabulator .tabulator-header{border-bottom:1px solid #d49526;} /* configurar a cor da letra do titulo*/
+
+  .tabulator .tabulator-header .tabulator-col{border-right:0px solid #aaa;background-color:#111217}
+
+
+/* Formatar as linhas da tabela*/
+  .tabulator-table .tabulator-row-odd{background-color:#D3D3D3;} /*definir a cor das colunas impares***/
+  .tabulator-table .tabulator-row-even{background-color:light grey; } /*definir a cor das colunas pares/
+
+</style>
