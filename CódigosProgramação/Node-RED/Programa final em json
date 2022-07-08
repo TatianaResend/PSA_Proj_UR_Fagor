@@ -1,0 +1,3751 @@
+[
+    {
+        "id": "fe7c0c025eecea35",
+        "type": "tab",
+        "label": "Rastreabilidade_V2",
+        "disabled": false,
+        "info": "#  // Coisas a serem implementadas\n\n * Leitura dados plc\n * Escrita na base de dados\n * Comunicação pc-plc via flags\n *  * 0- Nothing\n *  * 1- Ok para a leitura\n *  * 2- Leitura efectuada\n *  Envio da info ao plc\n *  Dashboard",
+        "env": []
+    },
+    {
+        "id": "f25be25ae48ce167",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Leitura do estado do Input DL300_Read OK",
+        "info": "",
+        "x": 210,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4310b398fb4fd96a",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "35614e0daee07039",
+        "order": 1,
+        "width": 5,
+        "height": 2,
+        "name": "",
+        "label": "Good Read Status",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 490,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "df010dd1152773a3",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Message Read OK",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8db7aa43b29ca8c0",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "\"DL300_Read OK\"",
+        "diff": true,
+        "name": "DL300_Read OK",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "df010dd1152773a3",
+                "4310b398fb4fd96a"
+            ]
+        ]
+    },
+    {
+        "id": "af7a41205f3dfa0f",
+        "type": "ui_switch",
+        "z": "fe7c0c025eecea35",
+        "name": "Acionar icone",
+        "label": "Trigger Status",
+        "tooltip": "",
+        "group": "35614e0daee07039",
+        "order": 2,
+        "width": 3,
+        "height": 2,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "radio_button_checked",
+        "oncolor": "green",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "radio_button_unchecked",
+        "offcolor": "red",
+        "animate": true,
+        "className": "",
+        "x": 480,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24240f724c255d3e",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "\"DL300_Start_COM\"",
+        "diff": false,
+        "name": "",
+        "x": 130,
+        "y": 280,
+        "wires": [
+            [
+                "9a2f041489b2b509",
+                "af7a41205f3dfa0f"
+            ]
+        ]
+    },
+    {
+        "id": "9a2f041489b2b509",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "check state of DL300_Start_Com",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b18c717056f839da",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Estado do acionamento da leitura",
+        "info": "",
+        "x": 170,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7227aaeaf05c43be",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Dados lidos last",
+        "diff": true,
+        "name": "Dados Lidos Last",
+        "x": 860,
+        "y": 140,
+        "wires": [
+            [
+                "c5a56afdc4ed36a1"
+            ]
+        ]
+    },
+    {
+        "id": "c5a56afdc4ed36a1",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": " 2D Code Function",
+        "func": "var payload=msg.payload;\n\nif (payload==\"\") // if string is empty\n\nmsg.payload=\"-\"\n\nreturn msg \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1110,
+        "y": 140,
+        "wires": [
+            [
+                "54729fa25ecd0f9b",
+                "3f232a5e17123ef5"
+            ]
+        ]
+    },
+    {
+        "id": "54729fa25ecd0f9b",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Message Last Data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1390,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3f232a5e17123ef5",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "35614e0daee07039",
+        "order": 3,
+        "width": 8,
+        "height": 2,
+        "name": "Conteúdo do último Código 2D ",
+        "label": "Última peça lida",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1410,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "6f305004f6e99a92",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Leitura do registo do último código lido",
+        "info": "",
+        "x": 930,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "dea738bc4657a82e",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Code [1]",
+        "diff": false,
+        "name": "",
+        "x": 3800,
+        "y": 280,
+        "wires": [
+            [
+                "b6447faacddbae55"
+            ]
+        ]
+    },
+    {
+        "id": "f086fd489074c2de",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Data_Hora [1]",
+        "diff": false,
+        "name": "",
+        "x": 3290,
+        "y": 240,
+        "wires": [
+            [
+                "d41dfa92fc3d3d10"
+            ]
+        ]
+    },
+    {
+        "id": "d81b5ef960b25099",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Separar data da hora",
+        "func": "\nvar output = msg.payload.split(\" \"); //separar quando houver espaçamento\n \nvar data = String(output[0]); //converter para string\nvar time = String(output[1]);\n\nvar msg1 = {payload:data};\nvar msg2 = {payload:time}\n\nreturn [msg1,msg2];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3640,
+        "y": 180,
+        "wires": [
+            [
+                "8c3476b2c16cec6e",
+                "164e6442165f1070"
+            ]
+        ]
+    },
+    {
+        "id": "d41dfa92fc3d3d10",
+        "type": "moment",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Format",
+        "topic": "Data_Time",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Lisbon",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD.MM.YYYY HH:mm:ss",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Lisbon",
+        "x": 3440,
+        "y": 220,
+        "wires": [
+            [
+                "d81b5ef960b25099",
+                "738f159fa39fe3af"
+            ]
+        ]
+    },
+    {
+        "id": "738f159fa39fe3af",
+        "type": "split",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Separar data da hora",
+        "splt": "11",
+        "spltType": "len",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 3640,
+        "y": 240,
+        "wires": [
+            [
+                "3ef22fd10fa3af8f"
+            ]
+        ]
+    },
+    {
+        "id": "3ef22fd10fa3af8f",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "msg.payload.split",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3930,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8c3476b2c16cec6e",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "msg.payload.functionGetTimeData",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3960,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6b62d2584fca4c0a",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Apresentar dados de leitura",
+        "info": "",
+        "x": 3440,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b6447faacddbae55",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3950,
+        "y": 260,
+        "wires": [
+            [
+                "1e5684a8247c6452"
+            ]
+        ]
+    },
+    {
+        "id": "164e6442165f1070",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "",
+        "func": "//Alterar o valor de message topic das payloads resultantes\nmsg1.topic=\"data1\"\nmsg2.topic=\"hora1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3980,
+        "y": 180,
+        "wires": [
+            [
+                "1e5684a8247c6452"
+            ]
+        ]
+    },
+    {
+        "id": "1e5684a8247c6452",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 4190,
+        "y": 220,
+        "wires": [
+            [
+                "1491c7a7baf845a3",
+                "343238326705e919"
+            ]
+        ]
+    },
+    {
+        "id": "1491c7a7baf845a3",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Insert Query",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data1;\nb= msg.payload.hora1;\nc= msg.payload.code1;\n\nvar ver =[] //uma variável para verify que já foi inserted\n\nif (a!='\"\"' && b!= '\"\"' && b!==ver) { // if there is time and data in the archive\n// and the data in there is not the same as what is already written \n\nmsg.topic=  \"INSERT INTO `psa_rastreabilidade`(`Data`,`Hora`,`Referência`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\nver=msg.payload.hora1\nreturn msg;\n}else \nreturn null\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4430,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "343238326705e919",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Joined content debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4480,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "bd7ab7d684378e29",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 4410,
+        "y": 220,
+        "wires": [
+            [
+                "2b9c13167489060d",
+                "f2bd13a3e4379f13"
+            ]
+        ]
+    },
+    {
+        "id": "2b9c13167489060d",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Inserted in database debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4660,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ba0650af4d8bb923",
+        "type": "s7 out",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "endpoint": "cafc5eb7e1b0f74b",
+        "variable": "",
+        "name": "Set Flag PLC 1",
+        "x": 4820,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f2bd13a3e4379f13",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 4620,
+        "y": 280,
+        "wires": [
+            [
+                "ba0650af4d8bb923"
+            ]
+        ]
+    },
+    {
+        "id": "50e0a8bd115177ae",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Function to set when inserted in database",
+        "func": "//get flow variable msg.topic and if it's true enable the set \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4680,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7eb65f3edb89e65f",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Número de peças",
+        "diff": false,
+        "name": "Número de peças",
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "deee594b825f14f2",
+                "d785dda856607c4d",
+                "2add6e16383d6940"
+            ]
+        ]
+    },
+    {
+        "id": "cd58b97ce7530760",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Número  de Peças maquinadas",
+        "info": "",
+        "x": 150,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "deee594b825f14f2",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "169258b03e5d3694",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Visualização do valor",
+        "label": "Número de peças maquinadas",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 380,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d785dda856607c4d",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Numero de peças Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b998c69f803aa54d",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Rastreio etapa 1-peça recolhida",
+        "info": "",
+        "x": 150,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "5f5459ba1da732f9",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Rastreio etapa 2-inicio de maquinagem",
+        "info": "",
+        "x": 150,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "be2d789b588f68e9",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Rastreio etapa 4-entrada deposito",
+        "info": "",
+        "x": 140,
+        "y": 3240,
+        "wires": []
+    },
+    {
+        "id": "13d4b7732b7ab0c1",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Rastreio etapa 3-fim de maquinagem",
+        "info": "",
+        "x": 140,
+        "y": 2580,
+        "wires": []
+    },
+    {
+        "id": "26ae26a46a751ae8",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Codigo_peca [1]",
+        "diff": true,
+        "name": "",
+        "x": 80,
+        "y": 1240,
+        "wires": [
+            [
+                "8b4b4ee97d91bc5d"
+            ]
+        ]
+    },
+    {
+        "id": "079735a4af73e475",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Posição [1]",
+        "diff": false,
+        "name": "",
+        "x": 60,
+        "y": 1340,
+        "wires": [
+            [
+                "1c1812cf587e9dd3"
+            ]
+        ]
+    },
+    {
+        "id": "45ae2977f1733a99",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Data_Hora [1]",
+        "diff": false,
+        "name": "",
+        "x": 70,
+        "y": 1460,
+        "wires": [
+            [
+                "456e18b9a48b27c0"
+            ]
+        ]
+    },
+    {
+        "id": "8b4b4ee97d91bc5d",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 1240,
+        "wires": [
+            [
+                "e3370ec6d387d17e",
+                "280bbc5a38be3996"
+            ]
+        ]
+    },
+    {
+        "id": "e3370ec6d387d17e",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1070,
+        "y": 1240,
+        "wires": [
+            [
+                "34460d8afa8e98c3"
+            ]
+        ]
+    },
+    {
+        "id": "456e18b9a48b27c0",
+        "type": "moment",
+        "z": "fe7c0c025eecea35",
+        "name": "Format",
+        "topic": "Data_Time",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Lisbon",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD.MM.YYYY HH:mm:ss",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Lisbon",
+        "x": 260,
+        "y": 1540,
+        "wires": [
+            [
+                "fe9ecf6cda8b4811",
+                "c0f50617a903ed1c"
+            ]
+        ]
+    },
+    {
+        "id": "34460d8afa8e98c3",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Joined content debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "1c1812cf587e9dd3",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1360,
+        "wires": [
+            [
+                "e3370ec6d387d17e",
+                "280bbc5a38be3996"
+            ]
+        ]
+    },
+    {
+        "id": "672eb41881eb9fd3",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data_tempo",
+        "func": "msg.topic=\"data_tempo2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 1420,
+        "wires": [
+            [
+                "e3370ec6d387d17e"
+            ]
+        ]
+    },
+    {
+        "id": "c1b5451346527be1",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Código peça[2]",
+        "diff": true,
+        "name": "",
+        "x": 120,
+        "y": 2040,
+        "wires": [
+            [
+                "e8dd8e06527c9032"
+            ]
+        ]
+    },
+    {
+        "id": "7434267f9c70bf1c",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Posição [2] ",
+        "diff": false,
+        "name": "",
+        "x": 100,
+        "y": 2120,
+        "wires": [
+            [
+                "80caccc2a1fba393"
+            ]
+        ]
+    },
+    {
+        "id": "7057cb7465b5a4de",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Data_Hora[2]",
+        "diff": false,
+        "name": "",
+        "x": 110,
+        "y": 2200,
+        "wires": [
+            [
+                "6b0ae78961592456",
+                "2c25b33a6c9bf843"
+            ]
+        ]
+    },
+    {
+        "id": "e8dd8e06527c9032",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 1940,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "845e19ac4a9aa246",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 2 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1170,
+        "y": 2000,
+        "wires": [
+            [
+                "3687bd368a0da2e4",
+                "dd39f5f20d2eb079",
+                "02e760ee06cd20eb"
+            ]
+        ]
+    },
+    {
+        "id": "6b0ae78961592456",
+        "type": "moment",
+        "z": "fe7c0c025eecea35",
+        "name": "Format",
+        "topic": "Data_Time",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Lisbon",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD.MM.YYYY HH:mm:ss",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Lisbon",
+        "x": 340,
+        "y": 2200,
+        "wires": [
+            [
+                "f7b5155d2bdaf7b6",
+                "9b590d3919bc9bf4",
+                "173661b27fc69516"
+            ]
+        ]
+    },
+    {
+        "id": "f7b5155d2bdaf7b6",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Separar data da hora",
+        "func": "\nvar output = msg.payload.split(\" \"); //separar quando houver espaçamento\n \nvar data = String(output[0]); //converter para string\nvar time = String(output[1]);\n\nvar msg1 = {payload:data};\nvar msg2 = {payload:time}\n\nreturn [msg1,msg2];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 2200,
+        "wires": [
+            [
+                "fc181d7c7010b6c1"
+            ]
+        ]
+    },
+    {
+        "id": "fc181d7c7010b6c1",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data e hora separados",
+        "func": "//Alterar o valor de message topic das payloads resultantes\nmsg1.topic=\"data1\"\nmsg2.topic=\"hora1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 2160,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "3687bd368a0da2e4",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Joined content debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 1940,
+        "wires": []
+    },
+    {
+        "id": "02e760ee06cd20eb",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "424620e6e9ddaff2",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Archive 2",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1460,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "80caccc2a1fba393",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 2040,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "3604a847aec7645c",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data_tempo",
+        "func": "msg.topic=\"data_tempo2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 2060,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "91c9529b968a2dc0",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Código peça[4]",
+        "diff": true,
+        "name": "",
+        "x": 100,
+        "y": 3320,
+        "wires": [
+            [
+                "3989c41a8f6c015a"
+            ]
+        ]
+    },
+    {
+        "id": "1822154bdf544946",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Posição [4] ",
+        "diff": false,
+        "name": "",
+        "x": 100,
+        "y": 3420,
+        "wires": [
+            [
+                "787f95c20b9e6ecc"
+            ]
+        ]
+    },
+    {
+        "id": "efe191fa32d90d98",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Data_Hora[4]",
+        "diff": false,
+        "name": "",
+        "x": 90,
+        "y": 3540,
+        "wires": [
+            [
+                "de5a01c3ea6b12e4",
+                "8b8068ca4f989098"
+            ]
+        ]
+    },
+    {
+        "id": "3989c41a8f6c015a",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code4",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 3320,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "cfd010e54ded9912",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1070,
+        "y": 3280,
+        "wires": [
+            [
+                "1d22f8b509bfa92b",
+                "61835c55a484eabb",
+                "f7507aa878f149e0"
+            ]
+        ]
+    },
+    {
+        "id": "de5a01c3ea6b12e4",
+        "type": "moment",
+        "z": "fe7c0c025eecea35",
+        "name": "Format",
+        "topic": "Data_Time",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Lisbon",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD.MM.YYYY HH:mm:ss",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Lisbon",
+        "x": 380,
+        "y": 3620,
+        "wires": [
+            [
+                "c0e6f7a57781a845",
+                "23629cb7a5ee9e22",
+                "f190070332cf12d3"
+            ]
+        ]
+    },
+    {
+        "id": "c0e6f7a57781a845",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Separar data da hora",
+        "func": "\nvar output = msg.payload.split(\" \"); //separar quando houver espaçamento\n \nvar data = String(output[0]); //converter para string\nvar time = String(output[1]);\n\nvar msg1 = {payload:data};\nvar msg2 = {payload:time}\n\nreturn [msg1,msg2];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 3620,
+        "wires": [
+            [
+                "71775bccd33d76e2"
+            ]
+        ]
+    },
+    {
+        "id": "71775bccd33d76e2",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data e hora separados",
+        "func": "//Alterar o valor de message topic das payloads resultantes\nmsg1.topic=\"data1\"\nmsg2.topic=\"hora1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 3600,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "1d22f8b509bfa92b",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Joined content debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1390,
+        "y": 3160,
+        "wires": []
+    },
+    {
+        "id": "f7507aa878f149e0",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "424620e6e9ddaff2",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "Archive 4",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1400,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "787f95c20b9e6ecc",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição4\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 3420,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "2437bb0604bc1c63",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data_tempo",
+        "func": "msg.topic=\"data_tempo2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 3440,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "9c35a59df72d6508",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Código peça[3]",
+        "diff": true,
+        "name": "",
+        "x": 80,
+        "y": 2700,
+        "wires": [
+            [
+                "f82ae7c5cc6c5f84"
+            ]
+        ]
+    },
+    {
+        "id": "ad62f3eb916a9a9c",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Posição [3] ",
+        "diff": false,
+        "name": "",
+        "x": 60,
+        "y": 2780,
+        "wires": [
+            [
+                "12b2d4504fe419f4"
+            ]
+        ]
+    },
+    {
+        "id": "d70008f91234d91f",
+        "type": "s7 in",
+        "z": "fe7c0c025eecea35",
+        "endpoint": "cafc5eb7e1b0f74b",
+        "mode": "single",
+        "variable": "Data_Hora[3]",
+        "diff": false,
+        "name": "",
+        "x": 70,
+        "y": 2880,
+        "wires": [
+            [
+                "c593ad3a03263d2e"
+            ]
+        ]
+    },
+    {
+        "id": "f82ae7c5cc6c5f84",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 2640,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "c20a504e291ea89c",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1010,
+        "y": 2600,
+        "wires": [
+            [
+                "0b74f4a1790a3a01",
+                "456648e0a423406f",
+                "4dbc6709dd4af908"
+            ]
+        ]
+    },
+    {
+        "id": "c593ad3a03263d2e",
+        "type": "moment",
+        "z": "fe7c0c025eecea35",
+        "name": "Format",
+        "topic": "Data_Time",
+        "input": "",
+        "inputType": "msg",
+        "inTz": "Europe/Lisbon",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD.MM.YYYY HH:mm:ss",
+        "locale": "en-US",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Lisbon",
+        "x": 280,
+        "y": 2940,
+        "wires": [
+            [
+                "cb2a8c02058a0823",
+                "bde37a7c283588fa",
+                "f601db622f69bdd2"
+            ]
+        ]
+    },
+    {
+        "id": "cb2a8c02058a0823",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Separar data da hora",
+        "func": "\nvar output = msg.payload.split(\" \"); //separar quando houver espaçamento\n \nvar data = String(output[0]); //converter para string\nvar time = String(output[1]);\n\nvar msg1 = {payload:data};\nvar msg2 = {payload:time}\n\nreturn [msg1,msg2];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 2940,
+        "wires": [
+            [
+                "42e74768a6761691"
+            ]
+        ]
+    },
+    {
+        "id": "42e74768a6761691",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data e hora separados",
+        "func": "//Alterar o valor de message topic das payloads resultantes\nmsg1.topic=\"data1\"\nmsg2.topic=\"hora1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 2920,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "0b74f4a1790a3a01",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Joined content debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "4dbc6709dd4af908",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "424620e6e9ddaff2",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "Archive 3",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1380,
+        "y": 2600,
+        "wires": []
+    },
+    {
+        "id": "12b2d4504fe419f4",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição3\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 2740,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "e89b6fc9a7961dfe",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Message topic data_tempo",
+        "func": "msg.topic=\"data_tempo2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 2780,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "fe9ecf6cda8b4811",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Blank Date_Time",
+        "func": "var payload=msg.payload;\n\nif (payload==\"01.01.1970 00:00:00\")\n\nmsg.payload= '' // Send Empty string\n\nreturn msg \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1500,
+        "wires": [
+            [
+                "672eb41881eb9fd3"
+            ]
+        ]
+    },
+    {
+        "id": "9b590d3919bc9bf4",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Blank Date_Time",
+        "func": "var payload=msg.payload;\n\nif (payload==\"01.01.1970 00:00:00\")\n\nmsg.payload= '' // Send Empty string\n\nreturn msg \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 2100,
+        "wires": [
+            [
+                "3604a847aec7645c"
+            ]
+        ]
+    },
+    {
+        "id": "23629cb7a5ee9e22",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Blank Date_Time",
+        "func": "var payload=msg.payload;\n\nif (payload==\"01.01.1970 00:00:00\")\n\nmsg.payload= '' // Send Empty string\n\nreturn msg \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 3500,
+        "wires": [
+            [
+                "2437bb0604bc1c63"
+            ]
+        ]
+    },
+    {
+        "id": "bde37a7c283588fa",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "d": true,
+        "name": "Blank Date_Time",
+        "func": "var payload=msg.payload;\n\nif (payload==\"01.01.1970 00:00:00\")\n\nmsg.payload= '' // Send Empty string\n\nreturn msg \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 2860,
+        "wires": [
+            [
+                "e89b6fc9a7961dfe"
+            ]
+        ]
+    },
+    {
+        "id": "c0f50617a903ed1c",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Separar data da hora",
+        "func": "output=msg.payload.split(\" \"); //separar a message payload\nvar data = output [0] // get data\nvar hora = output [1] // get time\nvar msg1 ={ payload: data}; // guardar a string no msg1\nvar msg2 ={ payload: hora}; // guardar a string no msg2\nreturn [msg1,msg2]\n \n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1600,
+        "wires": [
+            [
+                "678c832697c3f27a"
+            ],
+            [
+                "53266dbbdd7b0f2e"
+            ]
+        ]
+    },
+    {
+        "id": "678c832697c3f27a",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 1460,
+        "wires": [
+            [
+                "280bbc5a38be3996"
+            ]
+        ]
+    },
+    {
+        "id": "53266dbbdd7b0f2e",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 1540,
+        "wires": [
+            [
+                "280bbc5a38be3996"
+            ]
+        ]
+    },
+    {
+        "id": "280bbc5a38be3996",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1210,
+        "y": 1380,
+        "wires": [
+            [
+                "9120dfbb4bb9eeca",
+                "0da31d367e5fa4ce",
+                "94708f17e6091b63"
+            ]
+        ]
+    },
+    {
+        "id": "9120dfbb4bb9eeca",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Joined content debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1510,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "9825972cd8a650e3",
+        "type": "ui_table",
+        "z": "fe7c0c025eecea35",
+        "group": "ef56afbbaa98e1c2",
+        "name": "Tabela de rastreabilidade (phpmyadmin)",
+        "order": 2,
+        "width": "38",
+        "height": "50",
+        "columns": [
+            {
+                "field": "Data",
+                "title": "Data",
+                "width": "300",
+                "align": "center",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "Referência",
+                "title": "Referência",
+                "width": "",
+                "align": "center",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "Estado",
+                "title": "Estado ",
+                "width": "500",
+                "align": "center",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "Hora",
+                "title": "Hora",
+                "width": "",
+                "align": "center",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 960,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "a5b3ee0d0127c50f",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 1750,
+        "y": 1480,
+        "wires": [
+            [
+                "90a0c0edb34204b7"
+            ]
+        ]
+    },
+    {
+        "id": "90a0c0edb34204b7",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Inserted in database debug etapa 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2020,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "6896920b0b14aec3",
+        "type": "ui_template",
+        "z": "fe7c0c025eecea35",
+        "group": "35614e0daee07039",
+        "name": "Alinhar texto ao centro",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n\n<style> \n\n/*seleção do elemento a estilizar*/\n.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {   \n    \n/*alinhar ao centro*/    \n    text-align: center;    \n}\n</style> ",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 1720,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46b848bbd608aa5c",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Configuração adicionais dashboad em CSS",
+        "info": "",
+        "x": 1770,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "7766b8955f03e1e4",
+        "type": "ui_template",
+        "z": "fe7c0c025eecea35",
+        "group": "35614e0daee07039",
+        "name": "Colocar a sombra",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n\n<style>\n\n/*selecionar o elemento a estilizar*/\n.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n  \n  \n/*adicionar sombra*/\n\n    text-shadow: 5px 5px 8px #964B00;  /* Colocar sombra*/\n}\n</style>\n \n/*2px 2px 8px #f0d797*/",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 1710,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bd767b508b70a627",
+        "type": "ui_template",
+        "z": "fe7c0c025eecea35",
+        "group": "35614e0daee07039",
+        "name": "Round corners",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "format": "\n<style>\n\n\n\n   body.nr-dashboard-theme md-content md-card {\n   border-radius: 9px;\n  }\n  \n\n\n  .nr-dashboard-theme ui-card-panel {\n      border-radius: 9px;\n      \n  }\n\n    \n</style>\n",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1700,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "355e202cb19495df",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Ler a informação contida na BD",
+        "info": "",
+        "x": 130,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "2add6e16383d6940",
+        "type": "ui_chart",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "group": "169258b03e5d3694",
+        "order": 4,
+        "width": 10,
+        "height": 4,
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "20",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#b35f00",
+            "#b35f00",
+            "#bcbab8",
+            "#2ca02c",
+            "#ffc561",
+            "#b37023",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 230,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fe8f36e092114402",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "Trigger para a atualização dos dados",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 880,
+        "wires": [
+            [
+                "77a25fd459040a66"
+            ]
+        ]
+    },
+    {
+        "id": "77a25fd459040a66",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Read Query",
+        "func": "\n//msg.topic= \"SELECT * FROM `rastreabilidade2` \" // Para acessar a todos os dados da tabela\n\n\n//Retornar apenas as linhas válidas\n\n//msg.topic=  \"SELECT * FROM `rastreabilidade2` WHERE HORA !='undefined'\" \n\n\n\n//msg.topic = \"SELECT * FROM `rastreabilidade2` WHERE Hora!='undefined' AND (Referência != ' ' AND Estado != '');\"\n\n\n\n\n\n//msg.topic=\"SELECT * FROM `rastreabilidade2` WHERE Estado != \"\";\"\n\nmsg.topic= \"SELECT * FROM `rastreabilidade2` \" // aceder ao conteúdo da tabela\nreturn msg;\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 880,
+        "wires": [
+            [
+                "62b73c56858317d4"
+            ]
+        ]
+    },
+    {
+        "id": "62b73c56858317d4",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 630,
+        "y": 880,
+        "wires": [
+            [
+                "9825972cd8a650e3",
+                "8177d05f8a7e3ccc"
+            ]
+        ]
+    },
+    {
+        "id": "8177d05f8a7e3ccc",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Debug leitura da BD",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "4a6bf2201b74b5c7",
+        "type": "ui_template",
+        "z": "fe7c0c025eecea35",
+        "group": "13b35473.20565c",
+        "name": "Configurar a tabela",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n\n\n/* Formatar cabeçalho da tabela*/\n  .tabulator-col-title {background-color:#964B00; text-align: center; color: black }  /*configurar a cor de background e o tipo de letra do titulo***/\n  .tabulator .tabulator-header{border-bottom:1px solid #d49526;} /* configurar a cor da letra do titulo*/\n\n  .tabulator .tabulator-header .tabulator-col{border-right:0px solid #aaa;background-color:#111217}\n\n\n/* Formatar as linhas da tabela*/\n  .tabulator-table .tabulator-row-odd{background-color:#D3D3D3;} /*definir a cor das colunas impares***/\n  .tabulator-table .tabulator-row-even{background-color:light grey; } /*definir a cor das colunas pares/\n\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "className": "",
+        "x": 1710,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "173661b27fc69516",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Separar data da hora",
+        "func": "output=msg.payload.split(\" \"); //separar a message payload\nvar data = output [0] // get data\nvar hora = output [1] // get time\nvar msg1 ={ payload: data}; // guardar a string no msg1\nvar msg2 ={ payload: hora}; // guardar a string no msg2\nreturn [msg1,msg2]\n \n \n   //msg1 = {};\n  // msg2 = {};\n\n\n//msg.payload = msg.payload.split(\" \");\n//d=msg.payload[0]\n//t=msg.payload[1]\n\n//msg1.payload = d;\n    \n//msg2.payload = t;\n    \n // return [msg1,msg2];\n\n\n\n//var status = msg.payload;\n//var id = global.get (\"serial\");\n//var off = 0;\n//var msg1 = { payload: \"\" + id + \"\" + \"f00\" + \"\" + off + \"\"};\n//var msg2 = { payload: \"\" + id + \"\" + \"f01\" + \"\" + off + \"\"};\n//var msg3 = { payload: \"\" + id + \"\" + \"f02\" + \"\" + off + \"\"};\n \n\n//if (status == true) {\n  //  return [msg1, msg2, msg3];\n\n\n\n\n//var output = msg.payload.split(\" \"); //separar quando houver espaçamento\n//var data = String(output[0]); //converter para string\n//var time = String(output[1]);\n//var msg1 = {payload:data};\n//var msg2 = {payload:time}\n//return [msg1,msg2];\n//return output\n\n\n\n //   msg1 = {};\n   // msg2 = {};\n\n// var array = msg.payload.split(''),\n   // a = array[0], b = array[1]\n    \n//    msg1.payload = a;\n    \n    \n  //  msg2.payload = b;\n    \n\n//    return [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 2300,
+        "wires": [
+            [
+                "8edbddcfaeb29527"
+            ],
+            [
+                "79a6b78633b876bb"
+            ]
+        ]
+    },
+    {
+        "id": "8edbddcfaeb29527",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 2240,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "79a6b78633b876bb",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 2340,
+        "wires": [
+            [
+                "845e19ac4a9aa246"
+            ]
+        ]
+    },
+    {
+        "id": "dd39f5f20d2eb079",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 05.07)",
+        "func": "\n\na= msg.payload.data2; // data de entrada na Fagor\nb= msg.payload.hora2;  // hora de entrada na Fagor\nc= msg.payload.code2;  // código da peça\nd=msg.payload.posição2 //estado ou posição \n\n\n// Entrada Fagor\n\nif ((b!=='00:00:00' ) || (c!==\"\" && d!==\"\")) { // se o tempo ou a posição forem válidas \n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Estado`, `Hora`)  VALUES ('\" +d+ \"', '\" +b+ \"');\"\n\n\nreturn msg;\n\n}\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 2220,
+        "wires": [
+            [
+                "2db899f33dd6e325",
+                "f403f5cb53ad2771"
+            ]
+        ]
+    },
+    {
+        "id": "2db899f33dd6e325",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 1750,
+        "y": 2220,
+        "wires": [
+            [
+                "f92c8e1938627e1e"
+            ]
+        ]
+    },
+    {
+        "id": "f92c8e1938627e1e",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Inserted in database debug etapa 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1840,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "f601db622f69bdd2",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Separar data da hora",
+        "func": "output=msg.payload.split(\" \"); //separar a message payload\nvar data = output [0] // get data\nvar hora = output [1] // get time\nvar msg1 ={ payload: data}; // guardar a string no msg1\nvar msg2 ={ payload: hora}; // guardar a string no msg2\nreturn [msg1,msg2]\n \n \n   //msg1 = {};\n  // msg2 = {};\n\n\n//msg.payload = msg.payload.split(\" \");\n//d=msg.payload[0]\n//t=msg.payload[1]\n\n//msg1.payload = d;\n    \n//msg2.payload = t;\n    \n // return [msg1,msg2];\n\n\n\n//var status = msg.payload;\n//var id = global.get (\"serial\");\n//var off = 0;\n//var msg1 = { payload: \"\" + id + \"\" + \"f00\" + \"\" + off + \"\"};\n//var msg2 = { payload: \"\" + id + \"\" + \"f01\" + \"\" + off + \"\"};\n//var msg3 = { payload: \"\" + id + \"\" + \"f02\" + \"\" + off + \"\"};\n \n\n//if (status == true) {\n  //  return [msg1, msg2, msg3];\n\n\n\n\n//var output = msg.payload.split(\" \"); //separar quando houver espaçamento\n//var data = String(output[0]); //converter para string\n//var time = String(output[1]);\n//var msg1 = {payload:data};\n//var msg2 = {payload:time}\n//return [msg1,msg2];\n//return output\n\n\n\n //   msg1 = {};\n   // msg2 = {};\n\n// var array = msg.payload.split(''),\n   // a = array[0], b = array[1]\n    \n//    msg1.payload = a;\n    \n    \n  //  msg2.payload = b;\n    \n\n//    return [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 3020,
+        "wires": [
+            [
+                "27797c934bc1eb2b"
+            ],
+            [
+                "5ecac028cf7b40d9"
+            ]
+        ]
+    },
+    {
+        "id": "27797c934bc1eb2b",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 2980,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "5ecac028cf7b40d9",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 3060,
+        "wires": [
+            [
+                "c20a504e291ea89c"
+            ]
+        ]
+    },
+    {
+        "id": "456648e0a423406f",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 05.07)",
+        "func": "\n\na= msg.payload.data3; // data de saída da Fagor\nb= msg.payload.hora3;// tempo na saída da Fagor\nc= msg.payload.code3; // código da peça\nd=msg.payload.posição3 // posição\n\n\n\n// Saída Fagor\n\n\n\nif ((b!=='00:00:00') || (c!==\"\" && d!==\"\" )) {    // se o tempo ou se a posição for válida \n\n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Estado`, `Hora`)  VALUES ('\" +d+ \"', '\" +b+ \"');\"\n\n\nreturn msg;\n\n\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 2980,
+        "wires": [
+            [
+                "136e2a9ed1172a3a",
+                "105cf89a99ea213d"
+            ]
+        ]
+    },
+    {
+        "id": "136e2a9ed1172a3a",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 1510,
+        "y": 2980,
+        "wires": [
+            [
+                "0cb0dfbfb5313e05"
+            ]
+        ]
+    },
+    {
+        "id": "0cb0dfbfb5313e05",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Inserted in database debug etapa 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1620,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "61835c55a484eabb",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 05.07)",
+        "func": "\n\na= msg.payload.data4;  // data de entrada no depósito\nb= msg.payload.hora4; //hora de entrada no depósito\nc= msg.payload.code4; // código da peça\nd=msg.payload.posição4 // posição\n\n//Para a entrada no depósito\n\n\n\nif ((b!=='00:00:00') || (c!==\"\" && d!==\"\")){ // se o tempo e a posição forem válidos\n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Estado`, `Hora`)  VALUES ('\" +d+ \"', '\" +b+ \"');\"\n\nreturn msg;\n\n\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1398.888916015625,
+        "y": 3521.111083984375,
+        "wires": [
+            [
+                "f4657c5012a2c40d",
+                "2007cfce25d3dd31"
+            ]
+        ]
+    },
+    {
+        "id": "f4657c5012a2c40d",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 1690,
+        "y": 3520,
+        "wires": [
+            [
+                "9889461a3b1a382d"
+            ]
+        ]
+    },
+    {
+        "id": "9889461a3b1a382d",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Inserted in database debug etapa 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1830,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "f190070332cf12d3",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Separar data da hora",
+        "func": "output=msg.payload.split(\" \"); //separar a message payload\nvar data = output [0] // get data\nvar hora = output [1] // get time\nvar msg1 ={ payload: data}; // guardar a string no msg1\nvar msg2 ={ payload: hora}; // guardar a string no msg2\nreturn [msg1,msg2]\n \n \n   //msg1 = {};\n  // msg2 = {};\n\n\n//msg.payload = msg.payload.split(\" \");\n//d=msg.payload[0]\n//t=msg.payload[1]\n\n//msg1.payload = d;\n    \n//msg2.payload = t;\n    \n // return [msg1,msg2];\n\n\n\n//var status = msg.payload;\n//var id = global.get (\"serial\");\n//var off = 0;\n//var msg1 = { payload: \"\" + id + \"\" + \"f00\" + \"\" + off + \"\"};\n//var msg2 = { payload: \"\" + id + \"\" + \"f01\" + \"\" + off + \"\"};\n//var msg3 = { payload: \"\" + id + \"\" + \"f02\" + \"\" + off + \"\"};\n \n\n//if (status == true) {\n  //  return [msg1, msg2, msg3];\n\n\n\n\n//var output = msg.payload.split(\" \"); //separar quando houver espaçamento\n//var data = String(output[0]); //converter para string\n//var time = String(output[1]);\n//var msg1 = {payload:data};\n//var msg2 = {payload:time}\n//return [msg1,msg2];\n//return output\n\n\n\n //   msg1 = {};\n   // msg2 = {};\n\n// var array = msg.payload.split(''),\n   // a = array[0], b = array[1]\n    \n//    msg1.payload = a;\n    \n    \n  //  msg2.payload = b;\n    \n\n//    return [msg1,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 3780,
+        "wires": [
+            [
+                "935b7d8ccc0642f6"
+            ],
+            [
+                "918ace1aa5e1109a"
+            ]
+        ]
+    },
+    {
+        "id": "935b7d8ccc0642f6",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data4",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 3720,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "918ace1aa5e1109a",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora4",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 3800,
+        "wires": [
+            [
+                "cfd010e54ded9912"
+            ]
+        ]
+    },
+    {
+        "id": "4b2672b0ee5f3d42",
+        "type": "ui_media",
+        "z": "fe7c0c025eecea35",
+        "group": "4a8e5c6e966ca9ca",
+        "name": "Imagem da célula",
+        "width": 8,
+        "height": 5,
+        "order": 4,
+        "category": "Layout dos equipamentos",
+        "file": "layout 2.png",
+        "layout": "expand",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 1790,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e45c25e7c73b6827",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "Layout dos equipamentos/layout 2.png",
+        "payloadType": "str",
+        "x": 1610,
+        "y": 360,
+        "wires": [
+            [
+                "4b2672b0ee5f3d42"
+            ]
+        ]
+    },
+    {
+        "id": "e1dd7a3cbae95a5f",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Apresenção do layout da célula",
+        "info": "",
+        "x": 1730,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a91aec39d719e8b8",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 04.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\nif (d==\"Recolha da peça no tapete\") {\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Data`, `Referência`, `Saída do Tapete`)  VALUES ('\" +a+ \"', '\" +c+ \"', '\" +b+ \"');\"\n\n} else if(d==\"Inicio de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Entrada Fagor`)  VALUES ('\" +b+\"');\"\n    \n}else if(d==\"Fim de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída Fagor`)  VALUES ('\" +b+\"');\"\n} else {\n    \n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Peca depositada`)  VALUES ('\" +b+\"');\"\n    \n}\n\nreturn msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4290,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "02c91971cfb3e4d7",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 01.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Data`,`Referência`)  VALUES ('\" +a+ \"', '\" +b+ \"', '\" +c+ \"');\"\n\nreturn msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4290,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b78cc1606237b064",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "first Insert Query (alterado em 05.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\nif (d==\"Recolha da peça no tapete\") {\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída do Tapete`)  VALUES ('\" +b+\"');\"\n\n} else if(d==\"Inicio de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Entrada Fagor`)  VALUES ('\" +b+\"');\"\n    \n\n    \n    \n    \n    \n}else if(d==\"Fim de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída Fagor`)  VALUES ('\" +b+\"');\"\n} else {\n    \n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Peca depositada`)  VALUES ('\" +b+\"');\"\n    \n}\n\nreturn msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4290,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df3b882f72fc7868",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "second Insert Query (alterado em 05.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\n// if (d==\"Recolha da peça no tapete\") {\n//msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída do Tapete`)  VALUES ('\" +b+\"');\"\n\n//} else if(d==\"Inicio de maquinacao\") {\n//    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Entrada Fagor`)  VALUES ('\" +b+\"');\"\n    \n// msg.topic=\"UPDATE `rastreabilidade` SET `Entrada Fagor`='\"+b+\"' WHERE `Saída do Tapete`='\"\"'\"  //inserir onde tem um identificativo da coluna\n    \n    \n    \n    \n//}else if(d==\"Fim de maquinacao\") {\n  //  msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída Fagor`)  VALUES ('\" +b+\"');\"\n// } else {\n    \n   // msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Peca depositada`)  VALUES ('\" +b+\"');\"\n    \n//}\n\n//return msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4280,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0da31d367e5fa4ce",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Third Insert Query (05.07)",
+        "func": "\n\na= msg.payload.data1; // data de saída do tapete\nb= msg.payload.hora1; //tempo de saída do tapete\nc= msg.payload.code1; // referência\nd=msg.payload.posição1; // estado ou posição\n\n// Saída do Tapete\n\n\nif ((b!=='00:00:00') || (c!==\"\" && d!==\"\")){   //se o tempo for 00:00:00 ou se a posição for nula não escrever\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Data`,`Referência`, `Estado`, `Hora`)  VALUES ('\" +a+ \"', '\" +c+ \"','\"+d+\"', '\" +b+ \"');\"\n\n\n\nreturn msg;\n\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1510,
+        "y": 1480,
+        "wires": [
+            [
+                "a5b3ee0d0127c50f",
+                "6b6afbfd2d4a91f0"
+            ]
+        ]
+    },
+    {
+        "id": "94708f17e6091b63",
+        "type": "ui_text",
+        "z": "fe7c0c025eecea35",
+        "group": "424620e6e9ddaff2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Archive 1",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1520,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "04f9e83e5a87311e",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "00:00:00",
+        "payloadType": "str",
+        "x": 3380,
+        "y": 760,
+        "wires": [
+            [
+                "1b279bae850d2026",
+                "effa3f41de7c3eae"
+            ]
+        ]
+    },
+    {
+        "id": "60b119430da01880",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "12-04-2022",
+        "payloadType": "str",
+        "x": 3390,
+        "y": 820,
+        "wires": [
+            [
+                "6889783cf261fa8f",
+                "daf168bbaab9ef58"
+            ]
+        ]
+    },
+    {
+        "id": "53ea959f94c343fc",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Peça 2",
+        "payloadType": "str",
+        "x": 3370,
+        "y": 880,
+        "wires": [
+            [
+                "c69044d1745b7cc2",
+                "60370c8b8751a724"
+            ]
+        ]
+    },
+    {
+        "id": "1b279bae850d2026",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "time",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3350,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "6889783cf261fa8f",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3550,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c69044d1745b7cc2",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "nome da peça",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3320,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "60370c8b8751a724",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3627.142852783203,
+        "y": 887.1429443359375,
+        "wires": [
+            [
+                "bb791878bb26ad4b"
+            ]
+        ]
+    },
+    {
+        "id": "daf168bbaab9ef58",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3670,
+        "y": 740,
+        "wires": [
+            [
+                "bb791878bb26ad4b"
+            ]
+        ]
+    },
+    {
+        "id": "effa3f41de7c3eae",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3690,
+        "y": 660,
+        "wires": [
+            [
+                "bb791878bb26ad4b"
+            ]
+        ]
+    },
+    {
+        "id": "bce422872a741285",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "tapete",
+        "payloadType": "str",
+        "x": 3410,
+        "y": 980,
+        "wires": [
+            [
+                "8b964c11bcdd49a4"
+            ]
+        ]
+    },
+    {
+        "id": "8b964c11bcdd49a4",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição0\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3620,
+        "y": 980,
+        "wires": [
+            [
+                "bb791878bb26ad4b"
+            ]
+        ]
+    },
+    {
+        "id": "bb791878bb26ad4b",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 4010,
+        "y": 860,
+        "wires": [
+            [
+                "cfd246a39c2a570c"
+            ]
+        ]
+    },
+    {
+        "id": "f5aceffdf7c26b86",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 04.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\nif (d==\"Recolha da peça no tapete\") {\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída do Tapete`)  VALUES ('\" +b+\"');\"\n\n} else if(d==\"Inicio de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Entrada Fagor`)  VALUES ('\" +b+\"');\"\n    \n}else if(d==\"Fim de maquinacao\") {\n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Saída Fagor`)  VALUES ('\" +b+\"');\"\n} else {\n    \n    msg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Peca depositada`)  VALUES ('\" +b+\"');\"\n    \n}\n\nreturn msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4270,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f3a07a237c3b9921",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 4490,
+        "y": 860,
+        "wires": [
+            [
+                "c4fc3cf56cd4ceb0"
+            ]
+        ]
+    },
+    {
+        "id": "c4fc3cf56cd4ceb0",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "Teste inserção",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4700,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "e891531b446cfeb9",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 27.06)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\n\nvar ver =[] //uma variável para verify que já foi inserted\n\nif (a!='\"\"' && b!= '\"\"' && b!==ver) { // if there is time and data in the archive\n// and the data in there is not the same as what is already written \n\nmsg.topic=\"INSERT INTO `rastreabilidade`(`Data`,`Hora`,`Referência`)  VALUES ('\" +a+ \"', '\" +b+ \"', '\" +c+ \"');\"\nver=msg.payload.code0\nreturn msg;\n}else \nreturn null\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4270,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e40dea07c76b913d",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 01.07)",
+        "func": "//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\" +a+ \", '\" +b+ \"', '\" +c+ \"');\"\n\na= msg.payload.data0;\nb= msg.payload.hora0;\nc= msg.payload.code0;\nd=msg.payload.posição\n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade`(`Data`,`Hora`,`Referência`)  VALUES ('\" +a+ \"', '\" +b+ \"', '\" +c+ \"');\"\n\nreturn msg;\n\n\n\n\n// But i want to insert only once\n// if datas are the same, stop inserting\n\n//msg.topic=  \"INSERT INTO `dados_leitura`(`referência`, `informação`,`data_hora`)  VALUES (:f1,:f2 ,:f3);\";\n\n//a= msg.payload.id;\n//b= msg.payload.Código;\n//c= msg.payload.data_tempo;\n//msg.payload= msg.payload.id\n\n//if(a==0 && b=='\"\"' && c=='\"\"'){\n  //  return msg.topic= null\n//} else {msg.topic=  \"INSERT INTO `dados_leitura`(`referência`,`informação`,`data_hora`)  VALUES (\"+a+\", '\"+b+\"', '\"+c+\"');\"\n//return msg;\n//} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4270,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cfd246a39c2a570c",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Third Insert Query (05.07)",
+        "func": "\n\na= msg.payload.data0; // data de saída do tapete\nb= msg.payload.hora0; //tempo de saída do tapete\nc= msg.payload.code0; // refe\nd=msg.payload.posição0; // estado\n\n// Saída do Tapete\n\nif (b!=='00:00:00'){\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Data`,`Referência`, `Estado`, `Hora`)  VALUES ('\" +a+ \"', '\" +c+ \"','\"+d+\"', '\" +b+ \"');\"\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4250,
+        "y": 860,
+        "wires": [
+            [
+                "f3a07a237c3b9921"
+            ]
+        ]
+    },
+    {
+        "id": "cddd208fd7cd9092",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Testes",
+        "info": "",
+        "x": 3350,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "2c25b33a6c9bf843",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "debug time 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "6b6afbfd2d4a91f0",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "insert query 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1740,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "abc44a574bb750e2",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Insert Query (alterado em 05.07)",
+        "func": "\n\na= msg.payload.data0; // data de entrada na Fagor\nb= msg.payload.hora0;  // hora de entrada na Fagor\nc= msg.payload.code0;  // código da peça\nd=msg.payload.posição0 //estado ou posição \n\n\n// Entrada Fagor\n\nif ((b!=='00:00:00' ) || (c!= \" \" && d!=\" \")) { // se o tempo ou a posição forem válidas \n\n\nmsg.topic=\"INSERT IGNORE INTO `rastreabilidade2`(`Estado`, `Hora`)  VALUES ('\" +d+ \"', '\" +b+ \"');\"\n\n\nreturn msg;\n\n}\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4050,
+        "y": 1420,
+        "wires": [
+            [
+                "56dd4f0983bf8ac5"
+            ]
+        ]
+    },
+    {
+        "id": "56dd4f0983bf8ac5",
+        "type": "mysql",
+        "z": "fe7c0c025eecea35",
+        "mydb": "9f4265f9f7ba6f09",
+        "name": "",
+        "x": 4310,
+        "y": 1420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83be673a6def9e1b",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "16:21:35",
+        "payloadType": "str",
+        "x": 3140,
+        "y": 1320,
+        "wires": [
+            [
+                "01c6af6f93e1ace2",
+                "cc19c6d824400adf"
+            ]
+        ]
+    },
+    {
+        "id": "2b0d0c8555a96efa",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "12-04-2022",
+        "payloadType": "str",
+        "x": 3150,
+        "y": 1380,
+        "wires": [
+            [
+                "f9cc525116dfbe8b",
+                "f76f387f2d357292"
+            ]
+        ]
+    },
+    {
+        "id": "b68d7d171d6d5095",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Peça 2",
+        "payloadType": "str",
+        "x": 3130,
+        "y": 1440,
+        "wires": [
+            [
+                "a3f277a1848533ab",
+                "76f10f837ea29e3b"
+            ]
+        ]
+    },
+    {
+        "id": "01c6af6f93e1ace2",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "time",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3110,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "f9cc525116dfbe8b",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3310,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "a3f277a1848533ab",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "nome da peça",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3080,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "76f10f837ea29e3b",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "code0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3387.142852783203,
+        "y": 1447.1429443359375,
+        "wires": [
+            [
+                "e6c518bfe2ddad67"
+            ]
+        ]
+    },
+    {
+        "id": "f76f387f2d357292",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "data0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3430,
+        "y": 1300,
+        "wires": [
+            [
+                "e6c518bfe2ddad67"
+            ]
+        ]
+    },
+    {
+        "id": "cc19c6d824400adf",
+        "type": "change",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "hora0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3450,
+        "y": 1220,
+        "wires": [
+            [
+                "e6c518bfe2ddad67"
+            ]
+        ]
+    },
+    {
+        "id": "4d18b193e1aabf7f",
+        "type": "inject",
+        "z": "fe7c0c025eecea35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "tapete",
+        "payloadType": "str",
+        "x": 3170,
+        "y": 1540,
+        "wires": [
+            [
+                "34c62e8083497072"
+            ]
+        ]
+    },
+    {
+        "id": "34c62e8083497072",
+        "type": "function",
+        "z": "fe7c0c025eecea35",
+        "name": "Message topic posição",
+        "func": "msg.topic=\"posição0\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3380,
+        "y": 1540,
+        "wires": [
+            [
+                "e6c518bfe2ddad67"
+            ]
+        ]
+    },
+    {
+        "id": "e6c518bfe2ddad67",
+        "type": "join",
+        "z": "fe7c0c025eecea35",
+        "name": "join message 1 content",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 3770,
+        "y": 1420,
+        "wires": [
+            [
+                "abc44a574bb750e2"
+            ]
+        ]
+    },
+    {
+        "id": "2007cfce25d3dd31",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "insert query 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 3600,
+        "wires": []
+    },
+    {
+        "id": "105cf89a99ea213d",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "insert query 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 3060,
+        "wires": []
+    },
+    {
+        "id": "f403f5cb53ad2771",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "insert query 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1700,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "dc8df9eac2bf0758",
+        "type": "comment",
+        "z": "fe7c0c025eecea35",
+        "name": "Testar o novo insert query com insert ignore",
+        "info": "",
+        "x": 3230,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "8b8068ca4f989098",
+        "type": "debug",
+        "z": "fe7c0c025eecea35",
+        "name": "data_hora4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 170,
+        "y": 3680,
+        "wires": []
+    },
+    {
+        "id": "b246d65454e21d41",
+        "type": "ui_spacer",
+        "z": "fe7c0c025eecea35",
+        "name": "spacer",
+        "group": "424620e6e9ddaff2",
+        "order": 8,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "5702619596a074b6",
+        "type": "ui_spacer",
+        "z": "fe7c0c025eecea35",
+        "name": "spacer",
+        "group": "35614e0daee07039",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "5f31c05259f368f1",
+        "type": "ui_spacer",
+        "z": "fe7c0c025eecea35",
+        "name": "spacer",
+        "group": "9469e3da5cd2f8c4",
+        "order": 7,
+        "width": "1",
+        "height": "4"
+    },
+    {
+        "id": "35614e0daee07039",
+        "type": "ui_group",
+        "name": "Estado Leitura Códigos 2D",
+        "tab": "e15dc0a4fcb9e0bc",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cafc5eb7e1b0f74b",
+        "type": "s7 endpoint",
+        "transport": "iso-on-tcp",
+        "address": "192.168.114.16",
+        "port": "102",
+        "rack": "0",
+        "slot": "1",
+        "localtsaphi": "01",
+        "localtsaplo": "00",
+        "remotetsaphi": "01",
+        "remotetsaplo": "00",
+        "connmode": "rack-slot",
+        "adapterauto": true,
+        "adapterport": "",
+        "busaddr": "2",
+        "adapteraddr": "0",
+        "cycletime": "500",
+        "timeout": "1500",
+        "verbose": "default",
+        "name": "PLC-Rastreio",
+        "vartable": [
+            {
+                "addr": "I256.4",
+                "name": "\"DL300_Read OK\""
+            },
+            {
+                "addr": "M100.0",
+                "name": "\"DL300_Start_COM\""
+            },
+            {
+                "addr": "DB4,DTL 68",
+                "name": "Data_Hora [1]"
+            },
+            {
+                "addr": "DB4,S4.20",
+                "name": "Codigo_peca [1]"
+            },
+            {
+                "addr": "DB4,INT0",
+                "name": "Número de peças"
+            },
+            {
+                "addr": "DB4,S80.20",
+                "name": "Código peça[2]"
+            },
+            {
+                "addr": "DB4,S102.40",
+                "name": "Posição [2] "
+            },
+            {
+                "addr": "DB4,DTL 144",
+                "name": "Data_Hora[2]"
+            },
+            {
+                "addr": "DB4,S156.20",
+                "name": "Código peça[3]"
+            },
+            {
+                "addr": "DB4,S178.40",
+                "name": "Posição [3] "
+            },
+            {
+                "addr": "DB4,DTL 220",
+                "name": "Data_Hora[3]"
+            },
+            {
+                "addr": "DB4,S232.20",
+                "name": "Código peça[4]"
+            },
+            {
+                "addr": "DB4,S254.40",
+                "name": "Posição [4] "
+            },
+            {
+                "addr": "DB4,DTL 296",
+                "name": "Data_Hora[4]"
+            },
+            {
+                "addr": "DB8,S0.20",
+                "name": "Dados lidos last"
+            },
+            {
+                "addr": "DB4,S26.40",
+                "name": "Posição [1]"
+            },
+            {
+                "addr": "DB4,Int2",
+                "name": "\"Id_Posição\""
+            }
+        ]
+    },
+    {
+        "id": "9f4265f9f7ba6f09",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "psa_rastreabilidade",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "169258b03e5d3694",
+        "type": "ui_group",
+        "name": "Estatística",
+        "tab": "e15dc0a4fcb9e0bc",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "424620e6e9ddaff2",
+        "type": "ui_group",
+        "name": "Tabela com rastreio PLC",
+        "tab": "e15dc0a4fcb9e0bc",
+        "order": 5,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ef56afbbaa98e1c2",
+        "type": "ui_group",
+        "name": "Estado do Sistema (phpmyadmin)",
+        "tab": "e15dc0a4fcb9e0bc",
+        "order": 7,
+        "disp": true,
+        "width": "38",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "13b35473.20565c",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "de4df751.046f08",
+        "order": 3,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "4a8e5c6e966ca9ca",
+        "type": "ui_group",
+        "name": "Sistema",
+        "tab": "e15dc0a4fcb9e0bc",
+        "order": 4,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e15dc0a4fcb9e0bc",
+        "type": "ui_tab",
+        "name": "Projeto em Sistemas de Automação- Grupo 1.3",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "de4df751.046f08",
+        "type": "ui_tab",
+        "d": true,
+        "name": "Home",
+        "icon": "track_changes",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
