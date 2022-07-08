@@ -1,0 +1,11 @@
+<div ng-bind-html="msg.payload"></div>
+
+<style> 
+
+// seleção do elemento a estilizar
+.nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {   
+    
+// alinhar ao centro    
+    text-align: center;    
+}
+</style> 
