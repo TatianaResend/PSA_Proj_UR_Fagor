@@ -2,10 +2,10 @@
 
 <style> 
 
-// seleção do elemento a estilizar
+/*seleção do elemento a estilizar*/
 .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {   
     
-// alinhar ao centro    
+/*alinhar ao centro*/    
     text-align: center;    
 }
 </style> 
