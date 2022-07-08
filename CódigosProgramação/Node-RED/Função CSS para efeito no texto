@@ -2,12 +2,12 @@
 
 <style>
 
-// selecionar o elemento a estilizar
+/*selecionar o elemento a estilizar*/
 .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {
   
   
-//adicionar sombra
+/*adicionar sombra*/
 
-    text-shadow: 5px 5px 8px #964B00;  // Colocar sombra
+    text-shadow: 5px 5px 8px #964B00;  /*Especificações da sombra*/
 }
 </style>
