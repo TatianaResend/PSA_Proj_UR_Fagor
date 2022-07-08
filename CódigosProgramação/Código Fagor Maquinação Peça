@@ -1,0 +1,31 @@
+%MX,MX
+N10 G00 X106 Y62 ; * movimentação para a posição de recolha de peça
+N20 (IF (P104 EQ 1) GOTO N50) ; * se a peça for colocada (I34), ir para a linha 40
+N30 (IF (P104 EQ 8) GOTO N200) ;
+N40 (GOTO N10) ; se a peça não for colocada, voltar à linha 10 de modo a entrar em loop enquanto se aguarda pela peça
+N50 M92 ; * se a peça for colocada então tem que se prender a mesma através do atuador pneumático
+N60 (IF (P102 EQ 1) GOTO N90) ; * se o leitor ler a peça 1, salta-se para a subrotina da peça 1
+N70 (IF (P102 EQ 2) GOTO N130) ; * se o leitor ler a peça 2, salta-se para a subrotina da peça 2
+N80 (IF (P102 EQ 3) GOTO N170) ; * se o leitor ler a peça 3, salta-se para a subrotina da peça 3
+N90 G01 X80 Y55
+N91 X75 Y45
+N92 X70 Y58
+N93 X104 Y62
+N100 M93 ; * peça 1 finalizada/ atuador recuar
+N110 (IF (P104 EQ 2) GOTO N120) ; * peça 1 pronta a ser retirada
+N120 (GOTO N10) ; * voltar ao ínicio
+N130 G01 X90 Y40 ; * subrotina peça 2
+N131 X80 Y50
+N132 X70 Y40
+N133 X104 Y62
+N140 M93 ; * peça 2 finalizada / atuador recurar
+N150 (IF (P104 EQ 2) GOTO N160) ; * peça 2 pronta a ser retirada
+N160 (GOTO N10) ; * voltar ao ínicio
+N170 G01 X50 Y20 ; * subrotina peça 3
+N171 X80 Y30
+N172 X90 Y59
+N173 X104 Y62 
+N180 M93 ; * peça 2 finalizada / atuador recuar
+N190 (IF (P104 EQ 2) GOTO N200) ; * peça 3 pronta a ser retirada
+N200 (GOTO N10) ; * voltar ao ínicio
+N210 M30
