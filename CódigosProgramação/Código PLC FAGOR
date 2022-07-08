@@ -1,0 +1,208 @@
+%,MX,
+; 1. DECLARACAO VAR
+DEF SB01_PARG_EMERG I1
+;
+CY1 
+; 2. INICIAR VAR
+()
+= ERA O1 256  ; SAIDAS
+= ERA T1 256  ; TEMPORIZADORES
+= ERA C1 256  ; CONTADORES
+= ERA R1 256  ; REGISTOS
+= ERA M1 2000      ; MEM UTILIZADORES 
+= ERA M4000 4127   ; MENSAGENS
+= ERA M4500 4563   ; ERROS
+;
+END
+;
+; 3 - PROG PRINCIPAL
+PRG 
+REA     ; PROGRAMACAO EM MODO REAL
+;*****************GESTAO SEGURANCAS PRINCIPAIS DO EQUIPAMENTO********************
+I01                 ;Paragem emergencia consola
+AND /ALARM          ;M5507 (CNC->PLC) nao esta em alarme de emergencia (emergencia quando = 0)
+AND CNCREADY        ;M5500 (CNC->PLC) CNC sem erros
+AND PLCREADY        ;M5023 (PLC->CNC) PLC sem erros
+= O01
+= O02                ; (Porque a saida O01 esta avariada)
+;
+;******************************GESTAO MODOS FUNCIONAMENTO********************
+MANUAL              ;M5508 (CNC->PLC)
+OR AUTOMAT          ;M5509 (CNC->PLC)
+OR MDI              ;M5510 (CNC-PLC) Modo data input
+= M303              ;MODOS DE FUNCIONAMENTO COM DESLOCAMENTOS DOS EIXOS E EXECUCAO FUNCOES M
+;
+O02                 ;Maquina ligada e ok
+AND I01             ;PARAGEM EMERGENCIA CONSOLA
+AND M303            ;MODOS DE FUNCIONAMENTO COM DESLOCAMENTOS DOS EIXOS
+= M300              ;COND SEGURANCA OK
+;
+;*********************GESTAO PAINEL DE COMANDO/TECLADO************************
+START               ;M5501 (CNC->PLC)
+AND M300            ;COND SEGURANCA OK
+=CYSTART            ;M5507 (PLC->CNC) comeca a executar o programa
+;
+CPS KEYBD2 EQ $32   ;TECLA RESET  Compara a variavel com o numero que vem a seguir
+= M999              ;TECLA RESET RESET PRESSIONADA
+;
+;AUTORIZACAO EXECUCOES FUNCOES M E AUTORIZACAO EXECUCAO PROGRAMA CODIGO G
+()
+AND NOT M999        ;TECLA RESET PRESSIONADA (tecla reset nao pressionada)
+AND M300            ;CONDICOES SEGURANCA
+= /STOP             ;M5001 (PLC->CNC) permissao para executar o programa
+= /XFERINH          ;M5003 (PLC->CNC) impede a execucao do bloco seguinte finalizando o que esta a executar
+= /EMERGEN          ;M5000 (PLC->CNC) 
+;
+()
+AND NOT M999
+AND M300           ;CONDICOES SEGURANCA
+AND NOT I7         ;comutador feed hold
+= /FEEDHOL         ;M5002 (PLC->CNC) os avancos dos eixos sao parados mas o girar da cabeca continua  BLOQUEIA MOV EIXOS
+;****************************************EIXO X*********************************************************
+M300               ;COND SEGURANCA
+AND NOT LOPEN      ;M5506 (CNC->PLC) o loop de posicao do eixo esta aberto porque ocorreu um erro
+=TG2 2 1000        ;TEMPORIZADOR COM ATRASO
+;
+T2 
+= O3               ;INIHBIT EIXO X para colocar o drive em potencia
+=TG2 3 1000
+;
+T3
+=O5                ;ENABLE DRIVE X enable power suply PARA COLOCAR O DRIVE EM POTENCIA
+=TG2 4 1000
+;
+T4
+=SERVO1ON          ;AUTORIZA O DESLOCAMENTO EIXO X
+;
+;PONTO REFERENCIA
+NOT I21 = DECEL1   ;PONTO REFERENCIA EIXO X  M5102(PLC->CNC) PONTO REF MAQUINA
+;
+;NOT I15 = LIMIT+1  ;LIMITE NEGATIVO EIXO X   M5101(PLC->CNC)
+NOT I12 = LIMIT-1  ;LIMITE POSITIVO EIXO X   M5100(PLC->CNC)
+;
+;*****************************************EIXO Y***************************
+M300               ;COND SEGURANCA
+AND NOT LOPEN      ;M5506 (CNC->PLC) o loop de posicao do eixo esta aberto porque ocorreu um erro
+=TG2 5 1000       
+;
+T6 
+= O09               ;ENABLE DRIVE Y
+=TG2 7 1000
+;
+T5
+=O07                ;INIHBIT EIXO Y
+=TG2 6 1000
+;
+T7
+=SERVO2ON          ;AUTORIZA O DESLOCAMENTO EIXO Y
+;
+;PONTO REFERENCIA
+NOT I23 = DECEL2    ;PONTO REFERENCIA EIXO Y  M5102(PLC->CNC)
+;
+NOT I17 = LIMIT-2  ;LIMITE NEGATIVO EIXO Y    M5101(PLC->CNC)
+NOT I14 = LIMIT+2  ;LIMITE POSITIVO EIXO Y    M5100(PLC->CNC)
+;
+;*****************************************EIXO Z***********************
+T9 
+= O13               ;ENABLE DRIVE Z
+=TG2 10 1000
+;
+T2
+=O11                ;INIHBIT EIXO Z
+=TG2 9 1000
+;
+T10
+=SERVO3ON          ;AUTORIZA O DESLOCAMENTO EIXO Z
+;
+;PONTO REFERENCIA
+NOT I25 = DECEL3   ;PONTO REFERENCIA EIXO Z M5102(PLC->CNC)
+;
+I19 = LIMIT+3      ;LIMITE NEGATIVO EIXO Z M5100(PLC->CNC) (nao existe o limit+) (ao expewrimentar a maq vimos que nao era NOT) (M5100)
+;
+;******************************************FUNCOES M**********************
+MSTROBE            ;exucucao das funcoes auxiliares M (PEDIDO DE EXECUCAO DA FUNCAO AUXILIAR M)(M5532 CNC->PLC)
+OR TSTROBE         ;devemos executar a funcao auxiliar T do registo R558  (PLC PEDIDO NOVA FERRAMENTA)(M5534 CNC->PLC)
+OR SSTROBE         ;devemos executar a funcao auxiliar S do registo R557 (DEFINE AS RPM)(M5533 CNC->PLC)
+OR T2STROBE        ;devemos executar a funcao auxiliar T do registo R559  (PLC PEDIDO NOVA FERRAMENTA)(M5535 CNC->PLC)
+=TG1 50 200        ;TEMPORIZADOR COM ATRASO NUMERO 50 DE 200 MILISEGUNDOS
+;
+NOT T50            ; NUMERO DO TEMPORIZADOR
+AND M610           ; VAR AUXILIAR ABERTURA PORTA variavel da M10
+AND NOT M590       ; variavel DA M80(PISCAS)
+=AUXEND            ; indica se finalizou a execucao das funcoes M S e T  (ctrl fim execucao funcoes M)
+;
+;*************** M10 - FECHO PORTA *********
+DFU MSTROBE        
+AND M300               ; COND SEGURANCA E AUTORIZACAO DE EXECUCAO FUNCOES M
+AND CPS MBCD* EQ $10
+= SET M510             ; IMAGEM DO M10(CN) imagem(pedido) execucao funcao M10
+;
+M510                   ; IMAGEM DO M10(CN) imagem(pedido) execucao funcao M10
+AND M300               ; COND SEGURANCA E AUTORIZACAO DE EXECUCAO FUNCOES M
+=O6                    ; PENSO QUE TEM O NUMERO 6 PQ NAO TEM NEHUMMA SAIDA ASSOCIADA
+;
+NOT O6
+OR (O6
+AND I7)
+=M610
+;
+;*************** M33 **********************
+DFU MSTROBE
+AND M300           ; COND SEGURANCA E AUTORIZACAO DE EXECUCAO FUNCOES M
+AND CPS MBCD* EQ $33
+= SET M533         ; IMAGEM DO M33(CN)
+= RES M534         ; IMAGEM DO M34(CN)
+;
+M533
+AND M300
+=O22
+;
+DFU MSTROBE
+AND M300           ; COND SEGURANCA E AUTORIZACAO DE EXECUCAO FUNCOES M
+AND CPS MBCD* EQ $34
+= SET M533         ; IMAGEM DO M33(CN)
+;***************************************************** M80 *****************************************************
+DFU MSTROBE
+AND M300
+AND CPS MBCD* EQ $80   ;Compara a variavel com o numero que vem a seguir
+=SET M590              ;SET da Funcao M80 (numero escolhido por mim, ver grafcet)
+;
+M999
+OR M406               ; ultima funcao do grafcet
+= RES M590             ; RESET
+;
+;***************************************M92******************************************
+DFU MSTROBE
+AND M300
+AND CPS MBCD* EQ $92
+=SET M592
+=RES M593
+;***************************************M93*****************************************
+DFU MSTROBE
+AND M300
+AND CPS MBCD* EQ $93
+=SET M593
+=RES M592
+M592 AND M300
+=O23
+M593 AND M300
+=O20
+;*********R90/R91/R92********************+
+()=MOV 9 R100
+I18 AND NOT I20 AND NOT I30 = MOV 1 R100
+NOT I18 AND I20 AND NOT I30 = MOV 2 R100
+NOT I18 AND NOT I20 AND I30 = MOV 3 R100
+M300=CNCWR(R100,GUP 102,M102)
+;**********Pea colocada/pea retirada*****
+()=MOV 8 R101
+DFU I34 = MOV 1 R101
+DFU I36 = MOV 2 R101
+DFU I34 AND I36 = MOV 8 R101
+M303=CNCWR(R101,GUP 104,M104)
+;*************SAIDAS*********
+M300 AND AUTOMAT
+=O12
+O12 AND NOT I34
+=O4
+O12 AND O20
+=O6
