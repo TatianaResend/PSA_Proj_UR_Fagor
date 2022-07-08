@@ -1,0 +1,3 @@
+
+msg.topic= "SELECT * FROM `rastreabilidade2` " // aceder ao conteúdo da tabela
+return msg;
