@@ -10,6 +10,6 @@
 
 /* Formatar as linhas da tabela*/
   .tabulator-table .tabulator-row-odd{background-color:#D3D3D3;} /*definir a cor das colunas impares***/
-  .tabulator-table .tabulator-row-even{background-color:light grey; } /*definir a cor das colunas pares/
+  .tabulator-table .tabulator-row-even{background-color:light grey; } /*definir a cor das colunas pares*/
 
 </style>
