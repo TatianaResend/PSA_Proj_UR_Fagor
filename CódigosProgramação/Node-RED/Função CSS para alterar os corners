@@ -1,0 +1,18 @@
+<style>
+
+/*estilizar o interior dos grupos*/
+
+   body.nr-dashboard-theme md-content md-card {
+   border-radius: 9px;
+  }
+  
+
+/*estilizar os paineis da dashboard*/
+
+  .nr-dashboard-theme ui-card-panel {
+      border-radius: 9px;
+      
+  }
+
+    
+</style>
