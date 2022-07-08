@@ -1,0 +1,19 @@
+
+a= msg.payload.data4;  // data de entrada no depósito
+b= msg.payload.hora4; //hora de entrada no depósito
+c= msg.payload.code4; // código da peça
+d=msg.payload.posição4 // posição
+
+//Para a entrada no depósito
+
+
+
+if ((b!=='00:00:00') || (c!=="" && d!=="")){ // se o tempo e a posição forem válidos
+
+
+msg.topic="INSERT IGNORE INTO `rastreabilidade2`(`Estado`, `Hora`)  VALUES ('" +d+ "', '" +b+ "');"
+
+return msg;
+
+
+}
