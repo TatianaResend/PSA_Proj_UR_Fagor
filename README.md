@@ -14,13 +14,13 @@ Versões de softwares a utilizar:
 * PyCharm - OpenCV
 
 Endereços IP:
-* PC : ***.***.***.100
-* Robô Ur10 : ***.***.***.50
-* HMI bancada : ***.***.***.6
-* PLC Siemens S7-1200 : ***.***.***.16
-* PC rastreabilidade : ***.***.***.200
-* Datalogic Matrix 300N : ***.***.***.99
-* Câmara Teledyne Dalsa : ***.***.***.51
+* PC : *** . *** . *** . 100
+* Robô Ur10 : *** . *** . *** . 50
+* HMI bancada : *** . *** . *** . 6
+* PLC Siemens S7-1200 : *** . *** . *** . 16
+* PC rastreabilidade : *** . *** . *** . 200
+* Datalogic Matrix 300N : *** . *** . *** . 99
+* Câmara Teledyne Dalsa : *** . *** . *** . 51
 
 
 # Objetivo do projeto
